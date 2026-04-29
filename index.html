@@ -386,19 +386,19 @@ const waveForInning = [1,2,1,2,1,2,1]; // which wave fields each inning
 
 const lineups = [
   // Inning 1 - Wave 1
-  {"P":"Paul Salisbury","C":"Liam Hines","SS":"Evan Levine","3B":"Hayden Cheng","2B":"Ryan Stupak","1B":"Nicky Dufalt","LF":"Brendan Reynolds","CF":"Nate Fisk","RF":"Ethan Diamond"},
+  {"P":"Paul Salisbury","C":"Liam Hines","SS":"Evan Levine","3B":"Nicky Dufalt","2B":"Ryan Stupak","1B":"Hayden Cheng","LF":"Brendan Reynolds","CF":"Nate Fisk","RF":"Ethan Diamond"},
   // Inning 2 - Wave 2
   {"P":"Paul Salisbury","C":"Liam Hines","SS":"Gabriel Orbach","3B":"Ethan Diamond","2B":"Wesley Lubnow","1B":"Jack Taylor","LF":"Arjun Jani","CF":"Nick Kopic","RF":"Nate Fisk"},
   // Inning 3 - Wave 1 (Luke S arrives)
-  {"P":"Paul Salisbury","C":"Ethan Diamond","SS":"Evan Levine","3B":"Hayden Cheng","2B":"Ryan Stupak","1B":"Nicky Dufalt","LF":"Brendan Reynolds","CF":"Liam Hines","RF":"Luke Stefanczyk"},
+  {"P":"Paul Salisbury","C":"Ethan Diamond","SS":"Evan Levine","3B":"Nicky Dufalt","2B":"Ryan Stupak","1B":"Hayden Cheng","LF":"Brendan Reynolds","CF":"Liam Hines","RF":"Luke Stefanczyk"},
   // Inning 4 - Wave 2 (Cole IF shows)
   {"P":"Nate Fisk","C":"Ethan Diamond","SS":"Gabriel Orbach","3B":"Liam Hines","2B":"Wesley Lubnow","1B":"Jack Taylor","LF":"Arjun Jani","CF":"Nick Kopic","RF":"Cole Lytle"},
   // Inning 5 - Wave 1
-  {"P":"Nate Fisk","C":"Ethan Diamond","SS":"Evan Levine","3B":"Hayden Cheng","2B":"Ryan Stupak","1B":"Nicky Dufalt","LF":"Luke Stefanczyk","CF":"Liam Hines","RF":"Brendan Reynolds"},
+  {"P":"Nate Fisk","C":"Ethan Diamond","SS":"Evan Levine","3B":"Nicky Dufalt","2B":"Ryan Stupak","1B":"Hayden Cheng","LF":"Luke Stefanczyk","CF":"Liam Hines","RF":"Brendan Reynolds"},
   // Inning 6 - Wave 2
-  {"P":"Gabriel Orbach","C":"Ethan Diamond","SS":"Cole Lytle","3B":"Liam Hines","2B":"Wesley Lubnow","1B":"Jack Taylor","LF":"Arjun Jani","CF":"Nick Kopic","RF":"Hayden Cheng"},
+  {"P":"Gabriel Orbach","C":"Ethan Diamond","SS":"Cole Lytle","3B":"Liam Hines","2B":"Wesley Lubnow","1B":"Hayden Cheng","LF":"Arjun Jani","CF":"Nick Kopic","RF":"Jack Taylor"},
   // Inning 7 - Wave 1
-  {"P":"Gabriel Orbach","C":"Ethan Diamond","SS":"Evan Levine","3B":"Luke Stefanczyk","2B":"Ryan Stupak","1B":"Nicky Dufalt","LF":"Brendan Reynolds","CF":"Liam Hines","RF":"Hayden Cheng"}
+  {"P":"Gabriel Orbach","C":"Ethan Diamond","SS":"Evan Levine","3B":"Luke Stefanczyk","2B":"Ryan Stupak","1B":"Hayden Cheng","LF":"Nicky Dufalt","CF":"Liam Hines","RF":"Brendan Reynolds"}
 ];
 
 const benchData = [
@@ -424,14 +424,14 @@ const notes = [
   "Luke S slots right into RF — welcome to the party! Liam moves to CF after catching.",
   "Cole in RF if he shows. If no Cole, play 8 — still legal. Liam guests from Wave 1 at 3B.",
   "Wave 1 back. Liam & Luke S fill out the 7 fielders perfectly.",
-  "Hayden guests from Wave 1 to fill the 9. If no Cole, slide Liam to SS.",
-  "If we get here, Wave 1 closes it out. Hayden stays from inn 6."
+  "Hayden guests from Wave 1 at 1B. Jack slides to RF. If no Cole, slide Liam to SS.",
+  "If we get here, Wave 1 closes it out. Hayden stays at 1B, Nicky shifts to LF."
 ];
 
 const noColeNotes = {
-  3: "If Cole is a no-show: Inn 4 — Liam guests at 3B, play 8 (legal minimum). Inn 6 — Liam at SS, Hayden guests in RF, play 9.",
+  3: "If Cole is a no-show: Inn 4 — Liam guests at 3B, play 8 (legal minimum). Inn 6 — Liam at SS, Jack stays RF, Hayden at 1B.",
   4: "NO COLE PLAN: Play with 8 fielders (6 + P + C = 8, legal minimum). Remove RF spot.",
-  5: "If Cole never showed, inn 6 plan: Liam to SS, Hayden to RF, everyone else same."
+  5: "If Cole never showed, inn 6 plan: Liam to SS, Jack to RF, Hayden at 1B, everyone else same."
 };
 
 const allPlayers = new Set();
