@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CWELL Dodgers – Game 2 Lineup Card</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#0d2d6e;--navy-mid:#1a3f8f;--navy-light:#1e4fa8;
+    --red:#c8102e;--white:#ffffff;--cream:#f8f6f2;
+    --gray-100:#f0f0f0;--gray-200:#e0e0e0;--gray-400:#9ca3af;--gray-600:#4b5563;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--navy);min-height:100vh;}
+
+  .header{background:var(--navy);padding:18px 24px 14px;display:flex;align-items:center;gap:16px;border-bottom:4px solid var(--red);}
+  .header-logo{width:52px;height:52px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:var(--white);letter-spacing:1px;flex-shrink:0;}
+  .header-text{flex:1;}
+  .header-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;color:var(--white);letter-spacing:2px;text-transform:uppercase;line-height:1;}
+  .header-subtitle{font-size:13px;color:var(--gray-400);font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
+  .game-badge{background:var(--red);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px;padding:3px 10px;border-radius:4px;letter-spacing:1px;text-transform:uppercase;display:inline-block;margin-bottom:4px;}
+  .header-date{font-size:12px;color:var(--gray-400);}
+
+  .rotation-bar{background:var(--navy-mid);padding:8px 24px;display:flex;align-items:center;gap:0;overflow-x:auto;flex-wrap:wrap;row-gap:6px;}
+  .rotation-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;color:var(--gray-400);letter-spacing:2px;text-transform:uppercase;margin-right:10px;white-space:nowrap;}
+  .rot-block{height:28px;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--white);padding:0 10px;white-space:nowrap;}
+  .rot-divider{width:0;height:28px;border-left:2px dashed rgba(255,255,255,0.2);}
+  .rot-cole{background:#1565c0;}.rot-evan{background:#4a7c3f;}.rot-nathan{background:#1b5e20;}
+  .rot-liam{background:#b45309;}.rot-hayden{background:#7b5ea7;}.rot-ethan{background:#2e7d6b;}
+
+  .tabs{background:var(--navy);display:flex;padding:0 24px;}
+  .tab{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray-400);padding:10px 18px 8px;cursor:pointer;border:none;background:none;border-bottom:3px solid transparent;transition:color .2s,border-color .2s;}
+  .tab.active{color:var(--white);border-bottom-color:var(--red);}
+  .tab:hover:not(.active){color:var(--gray-200);}
+
+  .content{padding:20px 24px 40px;}
+  .tab-panel{display:none;}.tab-panel.active{display:block;}
+
+  .innings-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+  .inning-card{background:var(--white);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.08),0 0 0 1px rgba(13,45,110,0.06);}
+  .inning-header{background:var(--navy);padding:8px 14px;display:flex;align-items:center;justify-content:space-between;}
+  .inning-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--white);line-height:1;}
+  .inning-num span{font-size:11px;font-weight:600;color:var(--gray-400);letter-spacing:1px;text-transform:uppercase;margin-right:4px;}
+  .inning-pitcher-tag{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:3px;color:var(--white);}
+  .tag-cole{background:#1565c0;}.tag-evan{background:#4a7c3f;}.tag-nathan{background:#1b5e20;}
+
+  .position-list{padding:8px 0;}
+  .pos-row{display:flex;align-items:center;padding:5px 14px;gap:10px;border-bottom:1px solid var(--gray-100);}
+  .pos-row:last-child{border-bottom:none;}
+  .pos-badge{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.5px;text-transform:uppercase;background:var(--gray-100);color:var(--gray-600);padding:2px 6px;border-radius:3px;min-width:30px;text-align:center;}
+  .pos-badge.pitcher{background:#e8f0fb;color:#1a3f8f;}.pos-badge.catcher{background:#fdf3e7;color:#b45309;}
+  .pos-name{font-weight:600;font-size:14px;color:var(--navy);}
+
+  .bench-strip{background:#f9f0f1;border-top:1px solid #f0d0d4;padding:5px 14px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+  .bench-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--red);letter-spacing:1.5px;text-transform:uppercase;}
+  .bench-name{font-size:12px;color:#9b1c2e;background:#fde8eb;padding:2px 7px;border-radius:3px;font-weight:500;}
+
+  .tracker-section{margin-top:24px;}
+  .section-title{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--navy);}
+  .tracker-table{width:100%;border-collapse:collapse;background:var(--white);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.06);font-size:13px;}
+  .tracker-table th{background:var(--navy);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:8px 10px;text-align:center;}
+  .tracker-table th:first-child{text-align:left;padding-left:14px;}
+  .tracker-table td{padding:7px 10px;text-align:center;border-bottom:1px solid var(--gray-100);font-weight:500;}
+  .tracker-table td:first-child{text-align:left;padding-left:14px;font-weight:600;}
+  .tracker-table tr:last-child td{border-bottom:none;}
+  .tracker-table tr:hover td{background:#f5f7ff;}
+  .cell-playing{background:#e8f0fb;color:var(--navy-light);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;border-radius:3px;padding:2px 4px;display:inline-block;min-width:28px;}
+  .cell-bench{color:var(--gray-400);font-size:12px;}
+  .total-badge{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:14px;color:var(--navy);}
+
+  .pos-table-wrap{overflow-x:auto;}
+  .pos-table{width:100%;border-collapse:collapse;background:var(--white);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.06);font-size:12px;min-width:600px;}
+  .pos-table th{background:var(--navy);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:8px;text-align:center;}
+  .pos-table th:first-child{text-align:left;padding-left:12px;min-width:90px;}
+  .pos-table td{padding:6px 8px;text-align:center;border-bottom:1px solid var(--gray-100);border-right:1px solid var(--gray-100);}
+  .pos-table td:first-child{text-align:left;padding-left:12px;font-weight:600;font-size:13px;}
+  .pos-table tr:hover td{background:#f5f7ff;}
+  .pos-chip{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;padding:2px 6px;border-radius:3px;letter-spacing:0.3px;}
+  .chip-P{background:#e8f0fb;color:#1a3f8f;}.chip-C{background:#fdf3e7;color:#b45309;}
+  .chip-1B{background:#e8f5e9;color:#2e7d32;}.chip-2B{background:#f3e5f5;color:#7b1fa2;}
+  .chip-3B{background:#fce4ec;color:#c62828;}.chip-SS{background:#fff3e0;color:#e65100;}
+  .chip-LF{background:#e0f7fa;color:#00695c;}.chip-CF{background:#e0f2f1;color:#004d40;}
+  .chip-RF{background:#e8eaf6;color:#283593;}.chip-bench{background:#fde8eb;color:#9b1c2e;font-size:10px;}
+
+  .player-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;}
+  .player-card{background:var(--white);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.07);}
+  .player-card-header{background:var(--navy);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;}
+  .player-card-name{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:17px;color:var(--white);}
+  .player-innings-badge{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;background:rgba(255,255,255,0.15);color:var(--white);padding:2px 8px;border-radius:4px;}
+  .player-inning-strip{display:flex;padding:8px 12px;gap:4px;}
+  .inning-pip{flex:1;height:28px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;}
+  .pip-active{background:var(--navy);color:var(--white);}.pip-bench{background:var(--gray-100);color:var(--gray-400);}
+  .player-positions{display:flex;flex-wrap:wrap;gap:4px;padding:4px 12px 10px;}
+
+  @media(max-width:600px){
+    .header{padding:12px 14px;}.content{padding:14px 12px 32px;}
+    .tabs{padding:0 12px;}.rotation-bar{padding:8px 12px;}
+    .innings-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">CWD</div>
+  <div class="header-text">
+    <div class="header-title">CWELL Dodgers</div>
+    <div class="header-subtitle">Senior Baseball · West Essex League</div>
+  </div>
+  <div class="header-meta">
+    <div class="game-badge">Game 2</div>
+    <div class="header-date">2025 Season</div>
+  </div>
+</div>
+
+<div class="rotation-bar">
+  <span class="rotation-label">⚾ Pitching</span>
+  <div class="rot-block rot-cole">Cole · Inn 1–2</div>
+  <div class="rot-divider"></div>
+  <div class="rot-block rot-evan">Evan · Inn 3–5</div>
+  <div class="rot-divider"></div>
+  <div class="rot-block rot-nathan">Nathan · Inn 6–7</div>
+  <span style="margin-left:20px;" class="rotation-label">🎯 Catching</span>
+  <div class="rot-block rot-liam">Liam · 1,2,7</div>
+  <div class="rot-divider"></div>
+  <div class="rot-block rot-hayden">Hayden · 3,4</div>
+  <div class="rot-divider"></div>
+  <div class="rot-block rot-ethan">Ethan · 5,6</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('lineup',this)">Lineup</button>
+  <button class="tab" onclick="switchTab('positions',this)">Position Table</button>
+  <button class="tab" onclick="switchTab('players',this)">Player Summaries</button>
+</div>
+
+<div class="content">
+
+<div id="tab-lineup" class="tab-panel active">
+  <div class="innings-grid" id="innings-grid"></div>
+  <div class="tracker-section">
+    <div class="section-title">Innings Tracker</div>
+    <table class="tracker-table">
+      <thead><tr><th>Player</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>Total</th></tr></thead>
+      <tbody id="tracker-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<div id="tab-positions" class="tab-panel">
+  <div class="pos-table-wrap">
+    <table class="pos-table">
+      <thead><tr><th>Player</th><th>Inn 1</th><th>Inn 2</th><th>Inn 3</th><th>Inn 4</th><th>Inn 5</th><th>Inn 6</th><th>Inn 7</th><th>Total</th></tr></thead>
+      <tbody id="pos-table-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<div id="tab-players" class="tab-panel">
+  <div class="player-grid" id="player-grid"></div>
+</div>
+
+</div>
+
+<script>
+const lineup = {
+  1:{P:'Cole',    C:'Liam',   '1B':'Nicky D.','2B':'Luke',   '3B':'Paul',   SS:'Nathan',  LF:'Brendan',CF:'Ethan',  RF:'Jack'},
+  2:{P:'Cole',    C:'Liam',   '1B':'Nicky D.','2B':'Jack',   '3B':'Gabriel',SS:'Evan',    LF:'Arjun',  CF:'Wesley', RF:'Brendan'},
+  3:{P:'Evan',    C:'Hayden', '1B':'Liam',    '2B':'Nathan', '3B':'Gabriel',SS:'Paul',    LF:'Nick K.',CF:'Luke',   RF:'Brendan'},
+  4:{P:'Evan',    C:'Hayden', '1B':'Nicky D.','2B':'Ryan',   '3B':'Wesley', SS:'Gabriel', LF:'Luke',   CF:'Jack',   RF:'Ethan'},
+  5:{P:'Evan',    C:'Ethan',  '1B':'Nicky D.','2B':'Cole',   '3B':'Paul',   SS:'Brendan', LF:'Arjun',  CF:'Ryan',   RF:'Jack'},
+  6:{P:'Nathan',  C:'Ethan',  '1B':'Gabriel', '2B':'Cole',   '3B':'Ryan',   SS:'Evan',    LF:'Nick K.',CF:'Wesley', RF:'Hayden'},
+  7:{P:'Nathan',  C:'Liam',   '1B':'Paul',    '2B':'Ryan',   '3B':'Wesley', SS:'Gabriel', LF:'Nick K.',CF:'Arjun',  RF:'Hayden'},
+};
+
+const players=['Cole','Gabriel','Nathan','Liam','Hayden','Ethan',
+               'Ryan','Paul','Evan','Wesley','Jack','Brendan','Nicky D.','Arjun','Luke','Nick K.'];
+
+const pitcherTag={1:'cole',2:'cole',3:'evan',4:'evan',5:'evan',6:'nathan',7:'nathan'};
+const pitcherLabel={1:'⚾ Cole',2:'⚾ Cole',3:'⚾ Evan',4:'⚾ Evan',5:'⚾ Evan',6:'⚾ Nathan',7:'⚾ Nathan'};
+
+function getMap(player){
+  const m={};
+  for(let i=1;i<=7;i++) for(const[pos,p] of Object.entries(lineup[i])) if(p===player){m[i]=pos;break;}
+  return m;
+}
+
+// Inning cards
+const grid=document.getElementById('innings-grid');
+for(let inn=1;inn<=7;inn++){
+  const pm=lineup[inn];
+  const bench=players.filter(p=>!Object.values(pm).includes(p));
+  const rows=['P','C','1B','2B','3B','SS','LF','CF','RF'].map(pos=>{
+    const cls=pos==='P'?' pitcher':pos==='C'?' catcher':'';
+    return`<div class="pos-row"><span class="pos-badge${cls}">${pos}</span><span class="pos-name">${pm[pos]}</span></div>`;
+  }).join('');
+  const benchHtml=bench.map(p=>`<span class="bench-name">${p}</span>`).join('');
+  grid.innerHTML+=`
+    <div class="inning-card">
+      <div class="inning-header">
+        <div class="inning-num"><span>Inn</span>${inn}</div>
+        <span class="inning-pitcher-tag tag-${pitcherTag[inn]}">${pitcherLabel[inn]}</span>
+      </div>
+      <div class="position-list">${rows}</div>
+      <div class="bench-strip"><span class="bench-label">Bench</span>${benchHtml}</div>
+    </div>`;
+}
+
+// Tracker
+const tb=document.getElementById('tracker-body');
+for(const p of players){
+  const m=getMap(p);const tot=Object.keys(m).length;
+  let cells='';
+  for(let i=1;i<=7;i++) cells+=m[i]?`<td><span class="cell-playing">${m[i]}</span></td>`:`<td><span class="cell-bench">—</span></td>`;
+  tb.innerHTML+=`<tr><td>${p}</td>${cells}<td><span class="total-badge">${tot}</span></td></tr>`;
+}
+
+// Position table
+const ptb=document.getElementById('pos-table-body');
+for(const p of players){
+  const m=getMap(p);const tot=Object.keys(m).length;
+  let cells='';
+  for(let i=1;i<=7;i++){
+    if(m[i]){const cls='chip-'+m[i].replace(/[^A-Z0-9]/gi,'');cells+=`<td><span class="pos-chip ${cls}">${m[i]}</span></td>`;}
+    else cells+=`<td><span class="pos-chip chip-bench">BN</span></td>`;
+  }
+  ptb.innerHTML+=`<tr><td>${p}</td>${cells}<td><strong>${tot}</strong></td></tr>`;
+}
+
+// Player cards
+const pg=document.getElementById('player-grid');
+for(const p of players){
+  const m=getMap(p);const tot=Object.keys(m).length;
+  const posSet=[...new Set(Object.values(m))];
+  let pips='';
+  for(let i=1;i<=7;i++) pips+=m[i]?`<div class="inning-pip pip-active">${m[i]}</div>`:`<div class="inning-pip pip-bench">BN</div>`;
+  const tags=posSet.map(pos=>`<span class="pos-chip chip-${pos.replace(/[^A-Z0-9]/gi,'')}">${pos}</span>`).join('');
+  pg.innerHTML+=`
+    <div class="player-card">
+      <div class="player-card-header">
+        <span class="player-card-name">${p}</span>
+        <span class="player-innings-badge">${tot} inn</span>
+      </div>
+      <div class="player-inning-strip">${pips}</div>
+      <div class="player-positions">${tags}</div>
+    </div>`;
+}
+
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
