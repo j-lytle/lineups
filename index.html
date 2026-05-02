@@ -3,579 +3,467 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dodgers Game Plan — Tonight</title>
+<title>CWELL Dodgers — Game Day Lineup</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-* { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #0a1628;
+    color: #e8eaf0;
+    min-height: 100vh;
+    padding: 1.5rem 1rem 3rem;
+  }
 
-:root {
-  --blue: #005A9C;
-  --blue-dark: #003366;
-  --blue-light: #1a7fd4;
-  --red: #EF3E42;
-  --white: #FFFFFF;
-  --gray-50: #f7f8fa;
-  --gray-100: #ebedf0;
-  --gray-200: #d1d5db;
-  --gray-300: #9ca3af;
-  --gray-600: #4b5563;
-  --gray-800: #1f2937;
-  --gold: #d4a843;
-  --green: #16a34a;
-  --orange: #ea580c;
-  --wave1: #005A9C;
-  --wave2: #EF3E42;
-  --battery: #6b21a8;
-}
+  header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid #1e3a5f;
+  }
 
-body {
-  font-family: 'Barlow', sans-serif;
-  background: var(--gray-50);
-  color: var(--gray-800);
-  min-height: 100vh;
-}
+  .team-badge {
+    display: inline-block;
+    background: #1a4fc4;
+    color: #fff;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1rem;
+    letter-spacing: 0.15em;
+    padding: 4px 16px;
+    border-radius: 20px;
+    margin-bottom: 0.5rem;
+  }
 
-.header {
-  background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 60%, var(--blue-light) 100%);
-  color: white;
-  padding: 20px 24px 16px;
-  position: relative;
-  overflow: hidden;
-}
-.header::after {
-  content: '';
-  position: absolute;
-  top: -40px; right: -40px;
-  width: 200px; height: 200px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 50%;
-}
-.header-top {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 10px;
-}
-.team-name {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-.game-label {
-  font-size: 13px;
-  opacity: 0.8;
-  font-weight: 500;
-}
+  h1 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(2.8rem, 8vw, 4.5rem);
+    letter-spacing: 0.05em;
+    color: #fff;
+    line-height: 1;
+  }
 
-/* Pitching rotation bar */
-.rotation-bar {
-  display: flex;
-  gap: 4px;
-  margin-top: 12px;
-  padding: 10px 0;
-  border-top: 1px solid rgba(255,255,255,0.15);
-}
-.rot-slot {
-  flex: 1;
-  text-align: center;
-  padding: 6px 4px;
-  border-radius: 6px;
-  background: rgba(255,255,255,0.08);
-  font-size: 11px;
-  line-height: 1.4;
-  transition: background 0.2s;
-}
-.rot-slot.active {
-  background: rgba(255,255,255,0.22);
-  outline: 2px solid var(--gold);
-}
-.rot-inn { font-weight: 600; font-size: 10px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.5px; }
-.rot-p { font-weight: 700; font-size: 13px; color: var(--gold); }
-.rot-c { font-size: 11px; opacity: 0.85; }
+  h1 span { color: #4d9fff; }
 
-/* Wave indicator */
-.wave-bar {
-  display: flex;
-  gap: 12px;
-  padding: 10px 24px;
-  background: var(--gray-800);
-  align-items: center;
-}
-.wave-label {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  padding: 4px 12px;
-  border-radius: 4px;
-  color: white;
-}
-.wave-label.w1 { background: var(--wave1); }
-.wave-label.w2 { background: var(--wave2); }
-.wave-label.battery { background: var(--battery); }
-.wave-desc {
-  color: var(--gray-300);
-  font-size: 12px;
-}
-.wave-players {
-  color: var(--gray-200);
-  font-size: 11px;
-  margin-left: auto;
-}
+  .subtitle {
+    font-size: 0.85rem;
+    color: #6b8099;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 0.4rem;
+  }
 
-/* Tabs */
-.tabs {
-  display: flex;
-  gap: 2px;
-  padding: 8px 16px 0;
-  background: white;
-  border-bottom: 2px solid var(--gray-100);
-  overflow-x: auto;
-}
-.tab {
-  padding: 10px 16px;
-  border: none;
-  background: none;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--gray-300);
-  cursor: pointer;
-  border-bottom: 3px solid transparent;
-  transition: all 0.15s;
-  white-space: nowrap;
-}
-.tab:hover { color: var(--gray-600); }
-.tab.active { color: var(--blue); border-bottom-color: var(--blue); }
-.tab.w2-active { color: var(--red); border-bottom-color: var(--red); }
+  /* Inning nav */
+  .inning-nav {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
 
-/* Field layout */
-.field-wrap {
-  padding: 16px;
-}
-.field {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  max-width: 480px;
-  margin: 0 auto;
-}
+  .inn-btn {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1.5px solid #1e3a5f;
+    background: #0d1f38;
+    color: #6b8099;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
 
-.pos-card {
-  background: white;
-  border-radius: 8px;
-  padding: 10px;
-  text-align: center;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-  border-left: 4px solid var(--gray-200);
-  transition: all 0.2s;
-}
-.pos-card.battery { border-left-color: var(--battery); background: #faf5ff; }
-.pos-card.infield { border-left-color: var(--wave1); }
-.pos-card.outfield { border-left-color: var(--wave2); }
-.pos-card.w1-color { border-left-color: var(--wave1); background: #f0f7ff; }
-.pos-card.w2-color { border-left-color: var(--wave2); background: #fff5f5; }
+  .inn-btn.active {
+    background: #1a4fc4;
+    border-color: #4d9fff;
+    color: #fff;
+  }
 
-.pos-tag {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--gray-300);
-  margin-bottom: 2px;
-}
-.pos-player {
-  font-weight: 600;
-  font-size: 14px;
-  color: var(--gray-800);
-}
-.pos-note {
-  font-size: 10px;
-  color: var(--gray-300);
-  margin-top: 2px;
-}
+  .inn-btn:hover:not(.active) {
+    background: #1e3a5f;
+    color: #c0cfe0;
+  }
 
-/* Bench */
-.bench-section {
-  padding: 12px 16px;
-}
-.bench-title {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--gray-300);
-  margin-bottom: 8px;
-}
-.bench-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-.bench-pill {
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 500;
-  background: var(--gray-100);
-  color: var(--gray-600);
-}
-.bench-pill.late {
-  background: #fef3c7;
-  color: #92400e;
-  border: 1px dashed #d97706;
-}
-.bench-pill.sat {
-  background: #f3e8ff;
-  color: #6b21a8;
-  font-style: italic;
-}
+  /* Lineup card */
+  .card {
+    background: #0d1f38;
+    border: 1.5px solid #1e3a5f;
+    border-radius: 14px;
+    padding: 1.25rem 1rem;
+    margin-bottom: 1.25rem;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-/* Notes */
-.notes-section {
-  padding: 8px 16px 16px;
-}
-.note-box {
-  background: #fffbeb;
-  border: 1px solid #fde68a;
-  border-radius: 8px;
-  padding: 10px 14px;
-  font-size: 12px;
-  color: #92400e;
-  line-height: 1.5;
-}
-.note-box strong { color: #78350f; }
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #1e3a5f;
+  }
 
-/* Stats bar */
-.stats-section {
-  padding: 12px 16px 20px;
-  background: white;
-  border-top: 2px solid var(--gray-100);
-}
-.stats-title {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--gray-300);
-  margin-bottom: 8px;
-}
-.stat-row {
-  display: flex;
-  align-items: center;
-  padding: 3px 0;
-  gap: 8px;
-}
-.stat-name {
-  width: 90px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--gray-600);
-  text-align: right;
-}
-.stat-right {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.stat-bar-bg {
-  flex: 1;
-  height: 8px;
-  background: var(--gray-100);
-  border-radius: 4px;
-  overflow: hidden;
-}
-.stat-bar-fill {
-  height: 100%;
-  border-radius: 4px;
-  background: var(--blue);
-  transition: width 0.3s;
-}
-.stat-num {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--gray-800);
-  width: 16px;
-  text-align: center;
-}
+  .inning-label {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.4rem;
+    letter-spacing: 0.06em;
+    color: #fff;
+  }
 
-/* Contingency section */
-.contingency {
-  padding: 12px 16px;
-  background: #fef2f2;
-  border-top: 2px solid #fecaca;
-}
-.contingency-title {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--red);
-  margin-bottom: 6px;
-}
-.contingency-text {
-  font-size: 12px;
-  color: #991b1b;
-  line-height: 1.5;
-}
+  .pitcher-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: #1a4fc4;
+    color: #a8ccff;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  /* Position rows */
+  .pos-row {
+    display: flex;
+    align-items: center;
+    padding: 7px 4px;
+    border-radius: 7px;
+    transition: background 0.1s;
+  }
+
+  .pos-row:hover { background: #142c4d; }
+
+  .pos-tag {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    width: 36px;
+    color: #4d9fff;
+    flex-shrink: 0;
+  }
+
+  .pos-tag.p  { color: #ff7a4d; }
+  .pos-tag.c  { color: #ffd04d; }
+
+  .player-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #d8e8f8;
+    flex: 1;
+  }
+
+  .divider {
+    height: 1px;
+    background: #1e3a5f;
+    margin: 6px 4px;
+  }
+
+  /* Sitting section */
+  .sitting-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 4px;
+  }
+
+  .sit-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #6b8099;
+    white-space: nowrap;
+  }
+
+  .sit-names {
+    font-size: 0.88rem;
+    color: #6b8099;
+  }
+
+  /* Summary table */
+  .summary-card {
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    background: #0d1f38;
+    border: 1.5px solid #1e3a5f;
+    border-radius: 14px;
+    padding: 1.25rem 1rem;
+    overflow-x: auto;
+  }
+
+  .summary-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.3rem;
+    letter-spacing: 0.06em;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    min-width: 520px;
+  }
+
+  th {
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 0.06em;
+    font-size: 0.82rem;
+    color: #4d9fff;
+    text-align: center;
+    padding: 4px 6px;
+    border-bottom: 1px solid #1e3a5f;
+  }
+
+  th.player-col { text-align: left; }
+
+  td {
+    text-align: center;
+    padding: 6px;
+    border-bottom: 0.5px solid #132136;
+    color: #8aa5c0;
+    font-size: 0.78rem;
+  }
+
+  td.name-cell {
+    text-align: left;
+    color: #d8e8f8;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  td.sit-cell {
+    color: #1e3a5f;
+    font-size: 0.7rem;
+  }
+
+  td.total-cell {
+    font-weight: 600;
+    color: #4d9fff;
+  }
+
+  td.pitch-cell { color: #ff7a4d; font-weight: 500; }
+
+  tr:last-child td { border-bottom: none; }
+
+  footer {
+    text-align: center;
+    font-size: 0.72rem;
+    color: #2e4a66;
+    letter-spacing: 0.06em;
+    margin-top: 2rem;
+  }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-top">
-    <div>
-      <div class="team-name">CWELL Dodgers</div>
-      <div class="game-label">Tonight's Game Plan — Wave System</div>
-    </div>
+<header>
+  <div class="team-badge">West Essex League · 2025</div>
+  <h1>CWELL <span>Dodgers</span></h1>
+  <p class="subtitle">Senior Baseball — Game Day Field Card</p>
+</header>
+
+<!-- Inning nav -->
+<div class="inning-nav">
+  <button class="inn-btn active" onclick="showInning(1)">Inn 1</button>
+  <button class="inn-btn" onclick="showInning(2)">Inn 2</button>
+  <button class="inn-btn" onclick="showInning(3)">Inn 3</button>
+  <button class="inn-btn" onclick="showInning(4)">Inn 4</button>
+  <button class="inn-btn" onclick="showInning(5)">Inn 5</button>
+  <button class="inn-btn" onclick="showInning(6)">Inn 6</button>
+  <button class="inn-btn" onclick="showInning(7)">Inn 7</button>
+  <button class="inn-btn" onclick="showSummary()">Summary</button>
+</div>
+
+<!-- Inning cards -->
+<div id="inning-section">
+
+<div class="card" id="inn1">
+  <div class="card-header">
+    <span class="inning-label">Inning 1</span>
+    <span class="pitcher-badge">Nathan pitching · Cole catches · Paul 3B</span>
   </div>
-  <div id="rotation-bar" class="rotation-bar"></div>
+  <div class="pos-row"><span class="pos-tag p">P</span><span class="player-name">Nathan Fisk</span></div>
+  <div class="pos-row"><span class="pos-tag c">C</span><span class="player-name">Cole Lytle</span></div>
+  <div class="pos-row"><span class="pos-tag">1B</span><span class="player-name">Nicholas Dufault</span></div>
+  <div class="pos-row"><span class="pos-tag">2B</span><span class="player-name">Gabe Orbach</span></div>
+  <div class="pos-row"><span class="pos-tag">3B</span><span class="player-name">Paul Salisbury</span></div>
+  <div class="pos-row"><span class="pos-tag">SS</span><span class="player-name">Evan Levine</span></div>
+  <div class="pos-row"><span class="pos-tag">LF</span><span class="player-name">Brendan Reynolds</span></div>
+  <div class="pos-row"><span class="pos-tag">CF</span><span class="player-name">Jack Taylor</span></div>
+  <div class="pos-row"><span class="pos-tag">RF</span><span class="player-name">Ryan Stupak</span></div>
+  <div class="divider"></div>
+  <div class="sitting-row"><span class="sit-label">Sitting</span><span class="sit-names">Wesley Lubnow · Nicolas Kopic</span></div>
 </div>
 
-<div class="wave-bar" id="wave-indicator"></div>
-
-<div class="tabs" id="tabs"></div>
-
-<div class="field-wrap">
-  <div class="field" id="field"></div>
+<div class="card" id="inn2" style="display:none">
+  <div class="card-header">
+    <span class="inning-label">Inning 2</span>
+    <span class="pitcher-badge">Nathan pitching · Cole catches · Paul 3B</span>
+  </div>
+  <div class="pos-row"><span class="pos-tag p">P</span><span class="player-name">Nathan Fisk</span></div>
+  <div class="pos-row"><span class="pos-tag c">C</span><span class="player-name">Cole Lytle</span></div>
+  <div class="pos-row"><span class="pos-tag">1B</span><span class="player-name">Nicholas Dufault</span></div>
+  <div class="pos-row"><span class="pos-tag">2B</span><span class="player-name">Ryan Stupak</span></div>
+  <div class="pos-row"><span class="pos-tag">3B</span><span class="player-name">Paul Salisbury</span></div>
+  <div class="pos-row"><span class="pos-tag">SS</span><span class="player-name">Gabe Orbach</span></div>
+  <div class="pos-row"><span class="pos-tag">LF</span><span class="player-name">Nicolas Kopic</span></div>
+  <div class="pos-row"><span class="pos-tag">CF</span><span class="player-name">Wesley Lubnow</span></div>
+  <div class="pos-row"><span class="pos-tag">RF</span><span class="player-name">Brendan Reynolds</span></div>
+  <div class="divider"></div>
+  <div class="sitting-row"><span class="sit-label">Sitting</span><span class="sit-names">Evan Levine · Jack Taylor</span></div>
 </div>
 
-<div class="bench-section">
-  <div class="bench-title">Bench</div>
-  <div class="bench-pills" id="bench"></div>
+<div class="card" id="inn3" style="display:none">
+  <div class="card-header">
+    <span class="inning-label">Inning 3</span>
+    <span class="pitcher-badge">Gabe pitching · Paul catches · Cole SS</span>
+  </div>
+  <div class="pos-row"><span class="pos-tag p">P</span><span class="player-name">Gabe Orbach</span></div>
+  <div class="pos-row"><span class="pos-tag c">C</span><span class="player-name">Paul Salisbury</span></div>
+  <div class="pos-row"><span class="pos-tag">1B</span><span class="player-name">Nicholas Dufault</span></div>
+  <div class="pos-row"><span class="pos-tag">2B</span><span class="player-name">Evan Levine</span></div>
+  <div class="pos-row"><span class="pos-tag">3B</span><span class="player-name">Ryan Stupak</span></div>
+  <div class="pos-row"><span class="pos-tag">SS</span><span class="player-name">Cole Lytle</span></div>
+  <div class="pos-row"><span class="pos-tag">LF</span><span class="player-name">Jack Taylor</span></div>
+  <div class="pos-row"><span class="pos-tag">CF</span><span class="player-name">Wesley Lubnow</span></div>
+  <div class="pos-row"><span class="pos-tag">RF</span><span class="player-name">Nicolas Kopic</span></div>
+  <div class="divider"></div>
+  <div class="sitting-row"><span class="sit-label">Sitting</span><span class="sit-names">Nathan Fisk · Brendan Reynolds</span></div>
 </div>
 
-<div id="notes-area" class="notes-section"></div>
-
-<div class="stats-section">
-  <div class="stats-title">Innings Played (through selected inning)</div>
-  <div id="stats"></div>
+<div class="card" id="inn4" style="display:none">
+  <div class="card-header">
+    <span class="inning-label">Inning 4</span>
+    <span class="pitcher-badge">Gabe pitching · Cole catches · Paul 3B</span>
+  </div>
+  <div class="pos-row"><span class="pos-tag p">P</span><span class="player-name">Gabe Orbach</span></div>
+  <div class="pos-row"><span class="pos-tag c">C</span><span class="player-name">Cole Lytle</span></div>
+  <div class="pos-row"><span class="pos-tag">1B</span><span class="player-name">Nicholas Dufault</span></div>
+  <div class="pos-row"><span class="pos-tag">2B</span><span class="player-name">Evan Levine</span></div>
+  <div class="pos-row"><span class="pos-tag">3B</span><span class="player-name">Paul Salisbury</span></div>
+  <div class="pos-row"><span class="pos-tag">SS</span><span class="player-name">Nathan Fisk</span></div>
+  <div class="pos-row"><span class="pos-tag">LF</span><span class="player-name">Brendan Reynolds</span></div>
+  <div class="pos-row"><span class="pos-tag">CF</span><span class="player-name">Wesley Lubnow</span></div>
+  <div class="pos-row"><span class="pos-tag">RF</span><span class="player-name">Jack Taylor</span></div>
+  <div class="divider"></div>
+  <div class="sitting-row"><span class="sit-label">Sitting</span><span class="sit-names">Ryan Stupak · Nicolas Kopic</span></div>
 </div>
 
-<div class="contingency" id="contingency"></div>
+<div class="card" id="inn5" style="display:none">
+  <div class="card-header">
+    <span class="inning-label">Inning 5</span>
+    <span class="pitcher-badge">Evan pitching · Cole catches · Paul 3B</span>
+  </div>
+  <div class="pos-row"><span class="pos-tag p">P</span><span class="player-name">Evan Levine</span></div>
+  <div class="pos-row"><span class="pos-tag c">C</span><span class="player-name">Cole Lytle</span></div>
+  <div class="pos-row"><span class="pos-tag">1B</span><span class="player-name">Nicholas Dufault</span></div>
+  <div class="pos-row"><span class="pos-tag">2B</span><span class="player-name">Jack Taylor</span></div>
+  <div class="pos-row"><span class="pos-tag">3B</span><span class="player-name">Paul Salisbury</span></div>
+  <div class="pos-row"><span class="pos-tag">SS</span><span class="player-name">Gabe Orbach</span></div>
+  <div class="pos-row"><span class="pos-tag">LF</span><span class="player-name">Nathan Fisk</span></div>
+  <div class="pos-row"><span class="pos-tag">CF</span><span class="player-name">Wesley Lubnow</span></div>
+  <div class="pos-row"><span class="pos-tag">RF</span><span class="player-name">Nicolas Kopic</span></div>
+  <div class="divider"></div>
+  <div class="sitting-row"><span class="sit-label">Sitting</span><span class="sit-names">Brendan Reynolds · Ryan Stupak</span></div>
+</div>
+
+<div class="card" id="inn6" style="display:none">
+  <div class="card-header">
+    <span class="inning-label">Inning 6</span>
+    <span class="pitcher-badge">Evan pitching · Paul catches · Cole SS</span>
+  </div>
+  <div class="pos-row"><span class="pos-tag p">P</span><span class="player-name">Evan Levine</span></div>
+  <div class="pos-row"><span class="pos-tag c">C</span><span class="player-name">Paul Salisbury</span></div>
+  <div class="pos-row"><span class="pos-tag">1B</span><span class="player-name">Nicholas Dufault</span></div>
+  <div class="pos-row"><span class="pos-tag">2B</span><span class="player-name">Ryan Stupak</span></div>
+  <div class="pos-row"><span class="pos-tag">3B</span><span class="player-name">Brendan Reynolds</span></div>
+  <div class="pos-row"><span class="pos-tag">SS</span><span class="player-name">Cole Lytle</span></div>
+  <div class="pos-row"><span class="pos-tag">LF</span><span class="player-name">Jack Taylor</span></div>
+  <div class="pos-row"><span class="pos-tag">CF</span><span class="player-name">Wesley Lubnow</span></div>
+  <div class="pos-row"><span class="pos-tag">RF</span><span class="player-name">Nicolas Kopic</span></div>
+  <div class="divider"></div>
+  <div class="sitting-row"><span class="sit-label">Sitting</span><span class="sit-names">Nathan Fisk · Gabe Orbach</span></div>
+</div>
+
+<div class="card" id="inn7" style="display:none">
+  <div class="card-header">
+    <span class="inning-label">Inning 7</span>
+    <span class="pitcher-badge">Evan pitching · Paul catches · Cole SS · Best defense</span>
+  </div>
+  <div class="pos-row"><span class="pos-tag p">P</span><span class="player-name">Evan Levine</span></div>
+  <div class="pos-row"><span class="pos-tag c">C</span><span class="player-name">Paul Salisbury</span></div>
+  <div class="pos-row"><span class="pos-tag">1B</span><span class="player-name">Nicholas Dufault</span></div>
+  <div class="pos-row"><span class="pos-tag">2B</span><span class="player-name">Gabe Orbach</span></div>
+  <div class="pos-row"><span class="pos-tag">3B</span><span class="player-name">Brendan Reynolds</span></div>
+  <div class="pos-row"><span class="pos-tag">SS</span><span class="player-name">Cole Lytle</span></div>
+  <div class="pos-row"><span class="pos-tag">LF</span><span class="player-name">Jack Taylor</span></div>
+  <div class="pos-row"><span class="pos-tag">CF</span><span class="player-name">Wesley Lubnow</span></div>
+  <div class="pos-row"><span class="pos-tag">RF</span><span class="player-name">Ryan Stupak</span></div>
+  <div class="divider"></div>
+  <div class="sitting-row"><span class="sit-label">Sitting</span><span class="sit-names">Nathan Fisk · Nicolas Kopic</span></div>
+</div>
+
+</div><!-- end inning-section -->
+
+<!-- Summary table -->
+<div class="summary-card" id="summary-section" style="display:none">
+  <div class="summary-title">Innings Summary</div>
+  <table>
+    <thead>
+      <tr>
+        <th class="player-col">Player</th>
+        <th>Inn 1</th><th>Inn 2</th><th>Inn 3</th><th>Inn 4</th>
+        <th>Inn 5</th><th>Inn 6</th><th>Inn 7</th><th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="name-cell">Nathan Fisk</td><td class="pitch-cell">P</td><td class="pitch-cell">P</td><td class="sit-cell">—</td><td>SS</td><td>LF</td><td class="sit-cell">—</td><td class="sit-cell">—</td><td class="total-cell">4</td></tr>
+      <tr><td class="name-cell">Gabe Orbach</td><td>2B</td><td>SS</td><td class="pitch-cell">P</td><td class="pitch-cell">P</td><td>SS</td><td class="sit-cell">—</td><td>2B</td><td class="total-cell">6</td></tr>
+      <tr><td class="name-cell">Evan Levine</td><td>SS</td><td class="sit-cell">—</td><td>2B</td><td>2B</td><td class="pitch-cell">P</td><td class="pitch-cell">P</td><td class="pitch-cell">P</td><td class="total-cell">6</td></tr>
+      <tr><td class="name-cell">Cole Lytle</td><td>C</td><td>C</td><td>SS</td><td>C</td><td>C</td><td>SS</td><td>SS</td><td class="total-cell">7</td></tr>
+      <tr><td class="name-cell">Paul Salisbury</td><td>3B</td><td>3B</td><td>C</td><td>3B</td><td>3B</td><td>C</td><td>C</td><td class="total-cell">7</td></tr>
+      <tr><td class="name-cell">Ryan Stupak</td><td>RF</td><td>2B</td><td>3B</td><td class="sit-cell">—</td><td class="sit-cell">—</td><td>2B</td><td>RF</td><td class="total-cell">5</td></tr>
+      <tr><td class="name-cell">Jack Taylor</td><td>CF</td><td class="sit-cell">—</td><td>LF</td><td>RF</td><td>2B</td><td>LF</td><td>LF</td><td class="total-cell">6</td></tr>
+      <tr><td class="name-cell">Brendan Reynolds</td><td>LF</td><td>RF</td><td class="sit-cell">—</td><td>LF</td><td class="sit-cell">—</td><td>3B</td><td>3B</td><td class="total-cell">5</td></tr>
+      <tr><td class="name-cell">Wesley Lubnow</td><td class="sit-cell">—</td><td>CF</td><td>CF</td><td>CF</td><td>CF</td><td>CF</td><td>CF</td><td class="total-cell">6</td></tr>
+      <tr><td class="name-cell">Nicholas Dufault</td><td>1B</td><td>1B</td><td>1B</td><td>1B</td><td>1B</td><td>1B</td><td>1B</td><td class="total-cell">7</td></tr>
+      <tr><td class="name-cell">Nicolas Kopic</td><td class="sit-cell">—</td><td>LF</td><td>RF</td><td class="sit-cell">—</td><td>RF</td><td>RF</td><td class="sit-cell">—</td><td class="total-cell">4</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<footer>CWELL Dodgers · 2025 Senior Baseball · West Essex League</footer>
 
 <script>
-const positions = ["P","C","1B","2B","3B","SS","LF","CF","RF"];
-const posClass = {
-  "P":"battery","C":"battery",
-  "1B":"infield","2B":"infield","3B":"infield","SS":"infield",
-  "LF":"outfield","CF":"outfield","RF":"outfield"
-};
+  const innings = [1,2,3,4,5,6,7];
+  let currentView = 'inning';
+  let currentInning = 1;
 
-const pitcherFor = [
-  "Paul Salisbury","Paul Salisbury","Paul Salisbury",
-  "Nate Fisk","Nate Fisk",
-  "Gabriel Orbach","Gabriel Orbach"
-];
-const catcherFor = [
-  "Liam Hines","Liam Hines",
-  "Ethan Diamond","Ethan Diamond","Ethan Diamond",
-  "Ethan Diamond","Ethan Diamond"
-];
-
-const waveForInning = [1,2,1,2,1,2,1]; // which wave fields each inning
-
-const lineups = [
-  // Inning 1 - Wave 1
-  {"P":"Paul Salisbury","C":"Liam Hines","SS":"Evan Levine","3B":"Nicky Dufalt","2B":"Ryan Stupak","1B":"Hayden Cheng","LF":"Brendan Reynolds","CF":"Nate Fisk","RF":"Ethan Diamond"},
-  // Inning 2 - Wave 2
-  {"P":"Paul Salisbury","C":"Liam Hines","SS":"Gabriel Orbach","3B":"Ethan Diamond","2B":"Wesley Lubnow","1B":"Jack Taylor","LF":"Arjun Jani","CF":"Nick Kopic","RF":"Nate Fisk"},
-  // Inning 3 - Wave 1 (Luke S arrives)
-  {"P":"Paul Salisbury","C":"Ethan Diamond","SS":"Evan Levine","3B":"Nicky Dufalt","2B":"Ryan Stupak","1B":"Hayden Cheng","LF":"Brendan Reynolds","CF":"Liam Hines","RF":"Luke Stefanczyk"},
-  // Inning 4 - Wave 2 (Cole IF shows)
-  {"P":"Nate Fisk","C":"Ethan Diamond","SS":"Gabriel Orbach","3B":"Liam Hines","2B":"Wesley Lubnow","1B":"Jack Taylor","LF":"Arjun Jani","CF":"Nick Kopic","RF":"Cole Lytle"},
-  // Inning 5 - Wave 1
-  {"P":"Nate Fisk","C":"Ethan Diamond","SS":"Evan Levine","3B":"Nicky Dufalt","2B":"Ryan Stupak","1B":"Hayden Cheng","LF":"Luke Stefanczyk","CF":"Liam Hines","RF":"Brendan Reynolds"},
-  // Inning 6 - Wave 2
-  {"P":"Gabriel Orbach","C":"Ethan Diamond","SS":"Cole Lytle","3B":"Liam Hines","2B":"Wesley Lubnow","1B":"Hayden Cheng","LF":"Arjun Jani","CF":"Nick Kopic","RF":"Jack Taylor"},
-  // Inning 7 - Wave 1
-  {"P":"Gabriel Orbach","C":"Ethan Diamond","SS":"Evan Levine","3B":"Luke Stefanczyk","2B":"Ryan Stupak","1B":"Hayden Cheng","LF":"Nicky Dufalt","CF":"Liam Hines","RF":"Brendan Reynolds"}
-];
-
-const benchData = [
-  ["Jack Taylor","Wesley Lubnow","Arjun Jani","Nick Kopic","Gabriel Orbach"],
-  ["Evan Levine","Hayden Cheng","Ryan Stupak","Brendan Reynolds","Nicky Dufalt"],
-  ["Jack Taylor","Wesley Lubnow","Arjun Jani","Nick Kopic","Gabriel Orbach","Nate Fisk"],
-  ["Evan Levine","Hayden Cheng","Ryan Stupak","Brendan Reynolds","Nicky Dufalt","Luke Stefanczyk","Paul Salisbury"],
-  ["Jack Taylor","Wesley Lubnow","Arjun Jani","Nick Kopic","Gabriel Orbach","Paul Salisbury","Cole Lytle"],
-  ["Evan Levine","Ryan Stupak","Brendan Reynolds","Nicky Dufalt","Luke Stefanczyk","Paul Salisbury","Nate Fisk"],
-  ["Jack Taylor","Wesley Lubnow","Arjun Jani","Nick Kopic","Paul Salisbury","Nate Fisk","Cole Lytle"]
-];
-
-const latePlayers = new Set(["Luke Stefanczyk","Cole Lytle"]);
-const satPitchers = {}; // inning index where pitcher sat: Paul after 2, Nate after 4
-// Paul done after inn 3 (index 2), Nate done after inn 5 (index 4)
-
-const wave1Players = new Set(["Evan Levine","Hayden Cheng","Ryan Stupak","Brendan Reynolds","Nicky Dufalt","Liam Hines","Luke Stefanczyk"]);
-const wave2Players = new Set(["Jack Taylor","Wesley Lubnow","Arjun Jani","Nick Kopic","Gabriel Orbach","Ethan Diamond","Cole Lytle","Nate Fisk"]);
-
-const notes = [
-  "Ethan & Nate guest with Wave 1 this inning since they're free. Luke S & Cole not here yet.",
-  "Wave 2 on the field. Nate floats here before pitching inn 4. Full 9!",
-  "Luke S slots right into RF — welcome to the party! Liam moves to CF after catching.",
-  "Cole in RF if he shows. If no Cole, play 8 — still legal. Liam guests from Wave 1 at 3B.",
-  "Wave 1 back. Liam & Luke S fill out the 7 fielders perfectly.",
-  "Hayden guests from Wave 1 at 1B. Jack slides to RF. If no Cole, slide Liam to SS.",
-  "If we get here, Wave 1 closes it out. Hayden stays at 1B, Nicky shifts to LF."
-];
-
-const noColeNotes = {
-  3: "If Cole is a no-show: Inn 4 — Liam guests at 3B, play 8 (legal minimum). Inn 6 — Liam at SS, Jack stays RF, Hayden at 1B.",
-  4: "NO COLE PLAN: Play with 8 fielders (6 + P + C = 8, legal minimum). Remove RF spot.",
-  5: "If Cole never showed, inn 6 plan: Liam to SS, Jack to RF, Hayden at 1B, everyone else same."
-};
-
-const allPlayers = new Set();
-lineups.forEach(lu => Object.values(lu).forEach(p => allPlayers.add(p)));
-benchData.forEach(b => b.forEach(p => allPlayers.add(p)));
-
-function countThrough(idx) {
-  const counts = {};
-  allPlayers.forEach(p => counts[p] = 0);
-  for (let i = 0; i <= idx; i++) {
-    Object.values(lineups[i]).forEach(p => counts[p]++);
-  }
-  return counts;
-}
-
-function render(idx) {
-  const lu = lineups[idx];
-  const bn = benchData[idx];
-  const wave = waveForInning[idx];
-
-  // Rotation bar
-  const rb = document.getElementById("rotation-bar");
-  rb.innerHTML = "";
-  for (let i = 0; i < 7; i++) {
-    const d = document.createElement("div");
-    d.className = "rot-slot" + (i === idx ? " active" : "");
-    d.innerHTML = `<div class="rot-inn">Inn ${i+1}</div><div class="rot-p">${pitcherFor[i].split(" ")[1]}</div><div class="rot-c">${catcherFor[i].split(" ")[1]}</div>`;
-    d.onclick = () => render(i);
-    d.style.cursor = "pointer";
-    rb.appendChild(d);
-  }
-
-  // Wave indicator
-  const wi = document.getElementById("wave-indicator");
-  wi.innerHTML = `
-    <span class="wave-label ${wave===1?'w1':'w2'}">Wave ${wave}</span>
-    <span class="wave-desc">${wave===1?'Blue wave on defense':'Red wave on defense'}</span>
-  `;
-
-  // Tabs
-  const tabs = document.getElementById("tabs");
-  tabs.innerHTML = "";
-  for (let i = 0; i < 7; i++) {
-    const b = document.createElement("button");
-    const w = waveForInning[i];
-    b.className = "tab" + (i === idx ? (w===2?" w2-active":" active") : "");
-    b.textContent = "Inn " + (i + 1);
-    b.onclick = () => render(i);
-    tabs.appendChild(b);
-  }
-
-  // Field
-  const field = document.getElementById("field");
-  field.innerHTML = "";
-  // Layout: row1=P, row2=LF CF RF, row3=SS 2B, row4=3B 1B, row5=C
-  const layout = [
-    [null, "P", null],
-    ["LF", "CF", "RF"],
-    ["SS", null, "2B"],
-    ["3B", null, "1B"],
-    [null, "C", null]
-  ];
-  layout.forEach(row => {
-    row.forEach(pos => {
-      if (pos === null) {
-        const spacer = document.createElement("div");
-        field.appendChild(spacer);
-        return;
-      }
-      const player = lu[pos];
-      const d = document.createElement("div");
-      const isW1 = wave1Players.has(player);
-      const isW2 = wave2Players.has(player);
-      let colorClass = posClass[pos] === "battery" ? "battery" : (isW1 ? "w1-color" : "w2-color");
-      if (pos === "P" || pos === "C") colorClass = "battery";
-      d.className = "pos-card " + colorClass;
-      const lastName = player.split(" ").slice(1).join(" ");
-      const firstName = player.split(" ")[0];
-      const isLate = latePlayers.has(player) && idx >= 2;
-      d.innerHTML = `<div class="pos-tag">${pos}</div><div class="pos-player">${lastName}</div><div class="pos-note">${firstName}${isLate && idx === 2 && player === "Luke Stefanczyk" ? " ★ arrived" : ""}</div>`;
-      field.appendChild(d);
+  function showInning(n) {
+    currentView = 'inning';
+    currentInning = n;
+    innings.forEach(i => {
+      document.getElementById('inn'+i).style.display = (i===n) ? 'block' : 'none';
     });
-  });
-
-  // Bench
-  const benchEl = document.getElementById("bench");
-  benchEl.innerHTML = "";
-  bn.forEach(p => {
-    const s = document.createElement("span");
-    const isLate = latePlayers.has(p) && ((p === "Luke Stefanczyk" && idx < 2) || (p === "Cole Lytle"));
-    const isSat = (p === "Paul Salisbury" && idx >= 3) || (p === "Nate Fisk" && idx >= 5);
-    s.className = "bench-pill" + (isLate ? " late" : "") + (isSat ? " sat" : "");
-    const lastName = p.split(" ").slice(1).join(" ");
-    let label = lastName;
-    if (isLate && p === "Luke Stefanczyk" && idx < 2) label += " (arriving)";
-    if (isLate && p === "Cole Lytle") label += " (maybe)";
-    if (isSat) label += " (done pitching)";
-    s.textContent = label;
-    benchEl.appendChild(s);
-  });
-
-  // Notes
-  const notesArea = document.getElementById("notes-area");
-  notesArea.innerHTML = `<div class="note-box">${notes[idx]}</div>`;
-
-  // Stats
-  const counts = countThrough(idx);
-  const statsEl = document.getElementById("stats");
-  statsEl.innerHTML = "";
-  const maxInn = idx + 1;
-  [...allPlayers].sort((a,b) => counts[b]-counts[a]).forEach(p => {
-    const n = counts[p];
-    if (n === 0 && latePlayers.has(p) && idx < 2) return; // hide late players not arrived
-    const pct = Math.round(n / maxInn * 100);
-    const d = document.createElement("div");
-    d.className = "stat-row";
-    const lastName = p.split(" ").slice(1).join(" ");
-    d.innerHTML = `<span class="stat-name">${lastName}</span><div class="stat-right"><div class="stat-bar-bg"><div class="stat-bar-fill" style="width:${pct}%"></div></div><span class="stat-num">${n}</span></div>`;
-    statsEl.appendChild(d);
-  });
-
-  // Contingency
-  const contEl = document.getElementById("contingency");
-  if (idx === 0) {
-    contEl.innerHTML = `
-      <div class="contingency-title">Late Arrival Plan</div>
-      <div class="contingency-text">
-        <strong>Luke S</strong> → Wave 1 when he arrives (expected inn 3). Slots into RF.<br>
-        <strong>Cole</strong> → Wave 2 IF he shows (inn 3+). Slots into RF/SS.<br>
-        <strong>If Cole is a no-show:</strong> Inn 4 play with 8. Inn 6 pull Hayden from W1 as guest.
-      </div>`;
-  } else if (idx >= 3 && lineups[idx]["RF"] === "Cole Lytle" || lineups[idx]["SS"] === "Cole Lytle") {
-    contEl.innerHTML = `
-      <div class="contingency-title">If Cole Is a No-Show</div>
-      <div class="contingency-text">
-        ${idx === 3 ? "Play with 8 (6 fielders + P + C). Drop RF. Still above 8-player minimum." : 
-          idx === 5 ? "Move Liam to SS, keep Hayden in RF. Full 9." : "Adjust as needed."}
-      </div>`;
-  } else {
-    contEl.innerHTML = "";
+    document.getElementById('summary-section').style.display = 'none';
+    document.querySelectorAll('.inn-btn').forEach((btn, idx) => {
+      btn.classList.toggle('active', idx === n-1);
+    });
   }
-}
 
-render(0);
+  function showSummary() {
+    currentView = 'summary';
+    innings.forEach(i => document.getElementById('inn'+i).style.display = 'none');
+    document.getElementById('summary-section').style.display = 'block';
+    document.querySelectorAll('.inn-btn').forEach((btn, idx) => {
+      btn.classList.toggle('active', idx === 7);
+    });
+  }
 </script>
 </body>
 </html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dodgers Game Plan — Tonight</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600&display=swap');
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --blue: #005A9C;
+  --blue-dark: #003366;
+  --blue-light: #1a7fd4;
+  --red: #EF3E42;
+  --white: #FFFFFF;
+  --gray-50: #f7f8fa;
+  --gray-100: #ebedf0;
+  --gray-200: #d1d5db;
+  --gray-300: #9ca3af;
+  --gray-600: #4b5563;
+  --gray-800: #1f2937;
+  --gold: #d4a843;
+  --green: #16a34a;
+  --orange: #ea580c;
+  --wave1: #005A9C;
+  --wave2: #EF3E42;
+  --battery: #6b21a8;
+}
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--gray-50);
+  color: var(--gray-800);
+  min-height: 100vh;
+}
+
+.header {
+  background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 60%, var(--blue-light) 100%);
+  color: white;
+  padding: 20px 24px 16px;
+  position: relative;
+  overflow: hidden;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 50%;
+}
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.team-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.game-label {
+  font-size: 13px;
+  opacity: 0.8;
+  font-weight: 500;
+}
+
+/* Pitching rotation bar */
+.rotation-bar {
+  display: flex;
+  gap: 4px;
+  margin-top: 12px;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+.rot-slot {
+  flex: 1;
+  text-align: center;
+  padding: 6px 4px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.08);
+  font-size: 11px;
+  line-height: 1.4;
+  transition: background 0.2s;
+}
+.rot-slot.active {
+  background: rgba(255,255,255,0.22);
+  outline: 2px solid var(--gold);
+}
+.rot-inn { font-weight: 600; font-size: 10px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.5px; }
+.rot-p { font-weight: 700; font-size: 13px; color: var(--gold); }
+.rot-c { font-size: 11px; opacity: 0.85; }
+
+/* Wave indicator */
+.wave-bar {
+  display: flex;
+  gap: 12px;
+  padding: 10px 24px;
+  background: var(--gray-800);
+  align-items: center;
+}
+.wave-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 4px;
+  color: white;
+}
+.wave-label.w1 { background: var(--wave1); }
+.wave-label.w2 { background: var(--wave2); }
+.wave-label.battery { background: var(--battery); }
+.wave-desc {
+  color: var(--gray-300);
+  font-size: 12px;
+}
+.wave-players {
+  color: var(--gray-200);
+  font-size: 11px;
+  margin-left: auto;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 2px;
+  padding: 8px 16px 0;
+  background: white;
+  border-bottom: 2px solid var(--gray-100);
+  overflow-x: auto;
+}
+.tab {
+  padding: 10px 16px;
+  border: none;
+  background: none;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--gray-300);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.tab:hover { color: var(--gray-600); }
+.tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+.tab.w2-active { color: var(--red); border-bottom-color: var(--red); }
+
+/* Field layout */
+.field-wrap {
+  padding: 16px;
+}
+.field {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.pos-card {
+  background: white;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  border-left: 4px solid var(--gray-200);
+  transition: all 0.2s;
+}
+.pos-card.battery { border-left-color: var(--battery); background: #faf5ff; }
+.pos-card.infield { border-left-color: var(--wave1); }
+.pos-card.outfield { border-left-color: var(--wave2); }
+.pos-card.w1-color { border-left-color: var(--wave1); background: #f0f7ff; }
+.pos-card.w2-color { border-left-color: var(--wave2); background: #fff5f5; }
+
+.pos-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--gray-300);
+  margin-bottom: 2px;
+}
+.pos-player {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--gray-800);
+}
+.pos-note {
+  font-size: 10px;
+  color: var(--gray-300);
+  margin-top: 2px;
+}
+
+/* Bench */
+.bench-section {
+  padding: 12px 16px;
+}
+.bench-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--gray-300);
+  margin-bottom: 8px;
+}
+.bench-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.bench-pill {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--gray-100);
+  color: var(--gray-600);
+}
+.bench-pill.late {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px dashed #d97706;
+}
+.bench-pill.sat {
+  background: #f3e8ff;
+  color: #6b21a8;
+  font-style: italic;
+}
+
+/* Notes */
+.notes-section {
+  padding: 8px 16px 16px;
+}
+.note-box {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #92400e;
+  line-height: 1.5;
+}
+.note-box strong { color: #78350f; }
+
+/* Stats bar */
+.stats-section {
+  padding: 12px 16px 20px;
+  background: white;
+  border-top: 2px solid var(--gray-100);
+}
+.stats-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--gray-300);
+  margin-bottom: 8px;
+}
+.stat-row {
+  display: flex;
+  align-items: center;
+  padding: 3px 0;
+  gap: 8px;
+}
+.stat-name {
+  width: 90px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray-600);
+  text-align: right;
+}
+.stat-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.stat-bar-bg {
+  flex: 1;
+  height: 8px;
+  background: var(--gray-100);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.stat-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--blue);
+  transition: width 0.3s;
+}
+.stat-num {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray-800);
+  width: 16px;
+  text-align: center;
+}
+
+/* Contingency section */
+.contingency {
+  padding: 12px 16px;
+  background: #fef2f2;
+  border-top: 2px solid #fecaca;
+}
+.contingency-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 6px;
+}
+.contingency-text {
+  font-size: 12px;
+  color: #991b1b;
+  line-height: 1.5;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="team-name">CWELL Dodgers</div>
+      <div class="game-label">Tonight's Game Plan — Wave System</div>
+    </div>
+  </div>
+  <div id="rotation-bar" class="rotation-bar"></div>
+</div>
+
+<div class="wave-bar" id="wave-indicator"></div>
+
+<div class="tabs" id="tabs"></div>
+
+<div class="field-wrap">
+  <div class="field" id="field"></div>
+</div>
+
+<div class="bench-section">
+  <div class="bench-title">Bench</div>
+  <div class="bench-pills" id="bench"></div>
+</div>
+
+<div id="notes-area" class="notes-section"></div>
+
+<div class="stats-section">
+  <div class="stats-title">Innings Played (through selected inning)</div>
+  <div id="stats"></div>
+</div>
+
+<div class="contingency" id="contingency"></div>
+
+<script>
+const positions = ["P","C","1B","2B","3B","SS","LF","CF","RF"];
+const posClass = {
+  "P":"battery","C":"battery",
+  "1B":"infield","2B":"infield","3B":"infield","SS":"infield",
+  "LF":"outfield","CF":"outfield","RF":"outfield"
+};
+
+const pitcherFor = [
+  "Paul Salisbury","Paul Salisbury","Paul Salisbury",
+  "Nate Fisk","Nate Fisk",
+  "Gabriel Orbach","Gabriel Orbach"
+];
+const catcherFor = [
+  "Liam Hines","Liam Hines",
+  "Ethan Diamond","Ethan Diamond","Ethan Diamond",
+  "Ethan Diamond","Ethan Diamond"
+];
+
+const waveForInning = [1,2,1,2,1,2,1]; // which wave fields each inning
+
+const lineups = [
+  // Inning 1 - Wave 1
+  {"P":"Paul Salisbury","C":"Liam Hines","SS":"Evan Levine","3B":"Nicky Dufalt","2B":"Ryan Stupak","1B":"Hayden Cheng","LF":"Brendan Reynolds","CF":"Nate Fisk","RF":"Ethan Diamond"},
+  // Inning 2 - Wave 2
+  {"P":"Paul Salisbury","C":"Liam Hines","SS":"Gabriel Orbach","3B":"Ethan Diamond","2B":"Wesley Lubnow","1B":"Jack Taylor","LF":"Arjun Jani","CF":"Nick Kopic","RF":"Nate Fisk"},
+  // Inning 3 - Wave 1 (Luke S arrives)
+  {"P":"Paul Salisbury","C":"Ethan Diamond","SS":"Evan Levine","3B":"Nicky Dufalt","2B":"Ryan Stupak","1B":"Hayden Cheng","LF":"Brendan Reynolds","CF":"Liam Hines","RF":"Luke Stefanczyk"},
+  // Inning 4 - Wave 2 (Cole IF shows)
+  {"P":"Nate Fisk","C":"Ethan Diamond","SS":"Gabriel Orbach","3B":"Liam Hines","2B":"Wesley Lubnow","1B":"Jack Taylor","LF":"Arjun Jani","CF":"Nick Kopic","RF":"Cole Lytle"},
+  // Inning 5 - Wave 1
+  {"P":"Nate Fisk","C":"Ethan Diamond","SS":"Evan Levine","3B":"Nicky Dufalt","2B":"Ryan Stupak","1B":"Hayden Cheng","LF":"Luke Stefanczyk","CF":"Liam Hines","RF":"Brendan Reynolds"},
+  // Inning 6 - Wave 2
+  {"P":"Gabriel Orbach","C":"Ethan Diamond","SS":"Cole Lytle","3B":"Liam Hines","2B":"Wesley Lubnow","1B":"Hayden Cheng","LF":"Arjun Jani","CF":"Nick Kopic","RF":"Jack Taylor"},
+  // Inning 7 - Wave 1
+  {"P":"Gabriel Orbach","C":"Ethan Diamond","SS":"Evan Levine","3B":"Luke Stefanczyk","2B":"Ryan Stupak","1B":"Hayden Cheng","LF":"Nicky Dufalt","CF":"Liam Hines","RF":"Brendan Reynolds"}
+];
+
+const benchData = [
+  ["Jack Taylor","Wesley Lubnow","Arjun Jani","Nick Kopic","Gabriel Orbach"],
+  ["Evan Levine","Hayden Cheng","Ryan Stupak","Brendan Reynolds","Nicky Dufalt"],
+  ["Jack Taylor","Wesley Lubnow","Arjun Jani","Nick Kopic","Gabriel Orbach","Nate Fisk"],
+  ["Evan Levine","Hayden Cheng","Ryan Stupak","Brendan Reynolds","Nicky Dufalt","Luke Stefanczyk","Paul Salisbury"],
+  ["Jack Taylor","Wesley Lubnow","Arjun Jani","Nick Kopic","Gabriel Orbach","Paul Salisbury","Cole Lytle"],
+  ["Evan Levine","Ryan Stupak","Brendan Reynolds","Nicky Dufalt","Luke Stefanczyk","Paul Salisbury","Nate Fisk"],
+  ["Jack Taylor","Wesley Lubnow","Arjun Jani","Nick Kopic","Paul Salisbury","Nate Fisk","Cole Lytle"]
+];
+
+const latePlayers = new Set(["Luke Stefanczyk","Cole Lytle"]);
+const satPitchers = {}; // inning index where pitcher sat: Paul after 2, Nate after 4
+// Paul done after inn 3 (index 2), Nate done after inn 5 (index 4)
+
+const wave1Players = new Set(["Evan Levine","Hayden Cheng","Ryan Stupak","Brendan Reynolds","Nicky Dufalt","Liam Hines","Luke Stefanczyk"]);
+const wave2Players = new Set(["Jack Taylor","Wesley Lubnow","Arjun Jani","Nick Kopic","Gabriel Orbach","Ethan Diamond","Cole Lytle","Nate Fisk"]);
+
+const notes = [
+  "Ethan & Nate guest with Wave 1 this inning since they're free. Luke S & Cole not here yet.",
+  "Wave 2 on the field. Nate floats here before pitching inn 4. Full 9!",
+  "Luke S slots right into RF — welcome to the party! Liam moves to CF after catching.",
+  "Cole in RF if he shows. If no Cole, play 8 — still legal. Liam guests from Wave 1 at 3B.",
+  "Wave 1 back. Liam & Luke S fill out the 7 fielders perfectly.",
+  "Hayden guests from Wave 1 at 1B. Jack slides to RF. If no Cole, slide Liam to SS.",
+  "If we get here, Wave 1 closes it out. Hayden stays at 1B, Nicky shifts to LF."
+];
+
+const noColeNotes = {
+  3: "If Cole is a no-show: Inn 4 — Liam guests at 3B, play 8 (legal minimum). Inn 6 — Liam at SS, Jack stays RF, Hayden at 1B.",
+  4: "NO COLE PLAN: Play with 8 fielders (6 + P + C = 8, legal minimum). Remove RF spot.",
+  5: "If Cole never showed, inn 6 plan: Liam to SS, Jack to RF, Hayden at 1B, everyone else same."
+};
+
+const allPlayers = new Set();
+lineups.forEach(lu => Object.values(lu).forEach(p => allPlayers.add(p)));
+benchData.forEach(b => b.forEach(p => allPlayers.add(p)));
+
+function countThrough(idx) {
+  const counts = {};
+  allPlayers.forEach(p => counts[p] = 0);
+  for (let i = 0; i <= idx; i++) {
+    Object.values(lineups[i]).forEach(p => counts[p]++);
+  }
+  return counts;
+}
+
+function render(idx) {
+  const lu = lineups[idx];
+  const bn = benchData[idx];
+  const wave = waveForInning[idx];
+
+  // Rotation bar
+  const rb = document.getElementById("rotation-bar");
+  rb.innerHTML = "";
+  for (let i = 0; i < 7; i++) {
+    const d = document.createElement("div");
+    d.className = "rot-slot" + (i === idx ? " active" : "");
+    d.innerHTML = `<div class="rot-inn">Inn ${i+1}</div><div class="rot-p">${pitcherFor[i].split(" ")[1]}</div><div class="rot-c">${catcherFor[i].split(" ")[1]}</div>`;
+    d.onclick = () => render(i);
+    d.style.cursor = "pointer";
+    rb.appendChild(d);
+  }
+
+  // Wave indicator
+  const wi = document.getElementById("wave-indicator");
+  wi.innerHTML = `
+    <span class="wave-label ${wave===1?'w1':'w2'}">Wave ${wave}</span>
+    <span class="wave-desc">${wave===1?'Blue wave on defense':'Red wave on defense'}</span>
+  `;
+
+  // Tabs
+  const tabs = document.getElementById("tabs");
+  tabs.innerHTML = "";
+  for (let i = 0; i < 7; i++) {
+    const b = document.createElement("button");
+    const w = waveForInning[i];
+    b.className = "tab" + (i === idx ? (w===2?" w2-active":" active") : "");
+    b.textContent = "Inn " + (i + 1);
+    b.onclick = () => render(i);
+    tabs.appendChild(b);
+  }
+
+  // Field
+  const field = document.getElementById("field");
+  field.innerHTML = "";
+  // Layout: row1=P, row2=LF CF RF, row3=SS 2B, row4=3B 1B, row5=C
+  const layout = [
+    [null, "P", null],
+    ["LF", "CF", "RF"],
+    ["SS", null, "2B"],
+    ["3B", null, "1B"],
+    [null, "C", null]
+  ];
+  layout.forEach(row => {
+    row.forEach(pos => {
+      if (pos === null) {
+        const spacer = document.createElement("div");
+        field.appendChild(spacer);
+        return;
+      }
+      const player = lu[pos];
+      const d = document.createElement("div");
+      const isW1 = wave1Players.has(player);
+      const isW2 = wave2Players.has(player);
+      let colorClass = posClass[pos] === "battery" ? "battery" : (isW1 ? "w1-color" : "w2-color");
+      if (pos === "P" || pos === "C") colorClass = "battery";
+      d.className = "pos-card " + colorClass;
+      const lastName = player.split(" ").slice(1).join(" ");
+      const firstName = player.split(" ")[0];
+      const isLate = latePlayers.has(player) && idx >= 2;
+      d.innerHTML = `<div class="pos-tag">${pos}</div><div class="pos-player">${lastName}</div><div class="pos-note">${firstName}${isLate && idx === 2 && player === "Luke Stefanczyk" ? " ★ arrived" : ""}</div>`;
+      field.appendChild(d);
+    });
+  });
+
+  // Bench
+  const benchEl = document.getElementById("bench");
+  benchEl.innerHTML = "";
+  bn.forEach(p => {
+    const s = document.createElement("span");
+    const isLate = latePlayers.has(p) && ((p === "Luke Stefanczyk" && idx < 2) || (p === "Cole Lytle"));
+    const isSat = (p === "Paul Salisbury" && idx >= 3) || (p === "Nate Fisk" && idx >= 5);
+    s.className = "bench-pill" + (isLate ? " late" : "") + (isSat ? " sat" : "");
+    const lastName = p.split(" ").slice(1).join(" ");
+    let label = lastName;
+    if (isLate && p === "Luke Stefanczyk" && idx < 2) label += " (arriving)";
+    if (isLate && p === "Cole Lytle") label += " (maybe)";
+    if (isSat) label += " (done pitching)";
+    s.textContent = label;
+    benchEl.appendChild(s);
+  });
+
+  // Notes
+  const notesArea = document.getElementById("notes-area");
+  notesArea.innerHTML = `<div class="note-box">${notes[idx]}</div>`;
+
+  // Stats
+  const counts = countThrough(idx);
+  const statsEl = document.getElementById("stats");
+  statsEl.innerHTML = "";
+  const maxInn = idx + 1;
+  [...allPlayers].sort((a,b) => counts[b]-counts[a]).forEach(p => {
+    const n = counts[p];
+    if (n === 0 && latePlayers.has(p) && idx < 2) return; // hide late players not arrived
+    const pct = Math.round(n / maxInn * 100);
+    const d = document.createElement("div");
+    d.className = "stat-row";
+    const lastName = p.split(" ").slice(1).join(" ");
+    d.innerHTML = `<span class="stat-name">${lastName}</span><div class="stat-right"><div class="stat-bar-bg"><div class="stat-bar-fill" style="width:${pct}%"></div></div><span class="stat-num">${n}</span></div>`;
+    statsEl.appendChild(d);
+  });
+
+  // Contingency
+  const contEl = document.getElementById("contingency");
+  if (idx === 0) {
+    contEl.innerHTML = `
+      <div class="contingency-title">Late Arrival Plan</div>
+      <div class="contingency-text">
+        <strong>Luke S</strong> → Wave 1 when he arrives (expected inn 3). Slots into RF.<br>
+        <strong>Cole</strong> → Wave 2 IF he shows (inn 3+). Slots into RF/SS.<br>
+        <strong>If Cole is a no-show:</strong> Inn 4 play with 8. Inn 6 pull Hayden from W1 as guest.
+      </div>`;
+  } else if (idx >= 3 && lineups[idx]["RF"] === "Cole Lytle" || lineups[idx]["SS"] === "Cole Lytle") {
+    contEl.innerHTML = `
+      <div class="contingency-title">If Cole Is a No-Show</div>
+      <div class="contingency-text">
+        ${idx === 3 ? "Play with 8 (6 fielders + P + C). Drop RF. Still above 8-player minimum." : 
+          idx === 5 ? "Move Liam to SS, keep Hayden in RF. Full 9." : "Adjust as needed."}
+      </div>`;
+  } else {
+    contEl.innerHTML = "";
+  }
+}
+
+render(0);
+</script>
+</body>
+</html>
