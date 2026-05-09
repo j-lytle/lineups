@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CWELL Dodgers — Game Day Lineup</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #0a1628;
+    color: #e8eaf0;
+    min-height: 100vh;
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid #1e3a5f;
+  }
+
+  .team-badge {
+    display: inline-block;
+    background: #1a4fc4;
+    color: #fff;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1rem;
+    letter-spacing: 0.15em;
+    padding: 4px 16px;
+    border-radius: 20px;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(2.8rem, 8vw, 4.5rem);
+    letter-spacing: 0.05em;
+    color: #fff;
+    line-height: 1;
+  }
+
+  h1 span { color: #4d9fff; }
+
+  .subtitle {
+    font-size: 0.85rem;
+    color: #6b8099;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 0.4rem;
+  }
+
+  /* Inning nav */
+  .inning-nav {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .inn-btn {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1.5px solid #1e3a5f;
+    background: #0d1f38;
+    color: #6b8099;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .inn-btn.active {
+    background: #1a4fc4;
+    border-color: #4d9fff;
+    color: #fff;
+  }
+
+  .inn-btn:hover:not(.active) {
+    background: #1e3a5f;
+    color: #c0cfe0;
+  }
+
+  /* Lineup card */
+  .card {
+    background: #0d1f38;
+    border: 1.5px solid #1e3a5f;
+    border-radius: 14px;
+    padding: 1.25rem 1rem;
+    margin-bottom: 1.25rem;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #1e3a5f;
+  }
+
+  .inning-label {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.4rem;
+    letter-spacing: 0.06em;
+    color: #fff;
+  }
+
+  .pitcher-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: #1a4fc4;
+    color: #a8ccff;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  /* Position rows */
+  .pos-row {
+    display: flex;
+    align-items: center;
+    padding: 7px 4px;
+    border-radius: 7px;
+    transition: background 0.1s;
+  }
+
+  .pos-row:hover { background: #142c4d; }
+
+  .pos-tag {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    width: 36px;
+    color: #4d9fff;
+    flex-shrink: 0;
+  }
+
+  .pos-tag.p  { color: #ff7a4d; }
+  .pos-tag.c  { color: #ffd04d; }
+
+  .player-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #d8e8f8;
+    flex: 1;
+  }
+
+  .divider {
+    height: 1px;
+    background: #1e3a5f;
+    margin: 6px 4px;
+  }
+
+  /* Sitting section */
+  .sitting-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 4px;
+  }
+
+  .sit-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #6b8099;
+    white-space: nowrap;
+  }
+
+  .sit-names {
+    font-size: 0.88rem;
+    color: #6b8099;
+  }
+
+  /* Summary table */
+  .summary-card {
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    background: #0d1f38;
+    border: 1.5px solid #1e3a5f;
+    border-radius: 14px;
+    padding: 1.25rem 1rem;
+    overflow-x: auto;
+  }
+
+  .summary-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.3rem;
+    letter-spacing: 0.06em;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    min-width: 520px;
+  }
+
+  th {
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 0.06em;
+    font-size: 0.82rem;
+    color: #4d9fff;
+    text-align: center;
+    padding: 4px 6px;
+    border-bottom: 1px solid #1e3a5f;
+  }
+
+  th.player-col { text-align: left; }
+
+  td {
+    text-align: center;
+    padding: 6px;
+    border-bottom: 0.5px solid #132136;
+    color: #8aa5c0;
+    font-size: 0.78rem;
+  }
+
+  td.name-cell {
+    text-align: left;
+    color: #d8e8f8;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  td.sit-cell {
+    color: #1e3a5f;
+    font-size: 0.7rem;
+  }
+
+  td.total-cell {
+    font-weight: 600;
+    color: #4d9fff;
+  }
+
+  td.pitch-cell { color: #ff7a4d; font-weight: 500; }
+
+  tr:last-child td { border-bottom: none; }
+
+  footer {
+    text-align: center;
+    font-size: 0.72rem;
+    color: #2e4a66;
+    letter-spacing: 0.06em;
+    margin-top: 2rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="team-badge">West Essex League · 2025</div>
+  <h1>CWELL <span>Dodgers</span></h1>
+  <p class="subtitle">Senior Baseball — Game Day Field Card</p>
+</header>
+
+<!-- Inning nav -->
+<div class="inning-nav">
+  <button class="inn-btn active" onclick="showInning(1)">Inn 1</button>
+  <button class="inn-btn" onclick="showInning(2)">Inn 2</button>
+  <button class="inn-btn" onclick="showInning(3)">Inn 3</button>
+  <button class="inn-btn" onclick="showInning(4)">Inn 4</button>
+  <button class="inn-btn" onclick="showInning(5)">Inn 5</button>
+  <button class="inn-btn" onclick="showInning(6)">Inn 6</button>
+  <button class="inn-btn" onclick="showInning(7)">Inn 7</button>
+  <button class="inn-btn" onclick="showSummary()">Summary</button>
+</div>
+
+<!-- Inning cards -->
+<div id="inning-section">
+
+<div class="card" id="inn1">
+  <div class="card-header">
+    <span class="inning-label">Inning 1</span>
+    <span class="pitcher-badge">Nathan pitching · Cole catches · Paul 3B</span>
+  </div>
+  <div class="pos-row"><span class="pos-tag p">P</span><span class="player-name">Nathan Fisk</span></div>
+  <div class="pos-row"><span class="pos-tag c">C</span><span class="player-name">Cole Lytle</span></div>
+  <div class="pos-row"><span class="pos-tag">1B</span><span class="player-name">Nicholas Dufault</span></div>
+  <div class="pos-row"><span class="pos-tag">2B</span><span class="player-name">Gabe Orbach</span></div>
+  <div class="pos-row"><span class="pos-tag">3B</span><span class="player-name">Paul Salisbury</span></div>
+  <div class="pos-row"><span class="pos-tag">SS</span><span class="player-name">Evan Levine</span></div>
+  <div class="pos-row"><span class="pos-tag">LF</span><span class="player-name">Brendan Reynolds</span></div>
+  <div class="pos-row"><span class="pos-tag">CF</span><span class="player-name">Jack Taylor</span></div>
+  <div class="pos-row"><span class="pos-tag">RF</span><span class="player-name">Ryan Stupak</span></div>
+  <div class="divider"></div>
+  <div class="sitting-row"><span class="sit-label">Sitting</span><span class="sit-names">Wesley Lubnow · Nicolas Kopic</span></div>
+</div>
+
+<div class="card" id="inn2" style="display:none">
+  <div class="card-header">
+    <span class="inning-label">Inning 2</span>
+    <span class="pitcher-badge">Nathan pitching · Cole catches · Paul 3B</span>
+  </div>
+  <div class="pos-row"><span class="pos-tag p">P</span><span class="player-name">Nathan Fisk</span></div>
+  <div class="pos-row"><span class="pos-tag c">C</span><span class="player-name">Cole Lytle</span></div>
+  <div class="pos-row"><span class="pos-tag">1B</span><span class="player-name">Nicholas Dufault</span></div>
+  <div class="pos-row"><span class="pos-tag">2B</span><span class="player-name">Ryan Stupak</span></div>
+  <div class="pos-row"><span class="pos-tag">3B</span><span class="player-name">Paul Salisbury</span></div>
+  <div class="pos-row"><span class="pos-tag">SS</span><span class="player-name">Gabe Orbach</span></div>
+  <div class="pos-row"><span class="pos-tag">LF</span><span class="player-name">Nicolas Kopic</span></div>
+  <div class="pos-row"><span class="pos-tag">CF</span><span class="player-name">Wesley Lubnow</span></div>
+  <div class="pos-row"><span class="pos-tag">RF</span><span class="player-name">Brendan Reynolds</span></div>
+  <div class="divider"></div>
+  <div class="sitting-row"><span class="sit-label">Sitting</span><span class="sit-names">Evan Levine · Jack Taylor</span></div>
+</div>
+
+<div class="card" id="inn3" style="display:none">
+  <div class="card-header">
+    <span class="inning-label">Inning 3</span>
+    <span class="pitcher-badge">Gabe pitching · Paul catches · Cole SS</span>
+  </div>
+  <div class="pos-row"><span class="pos-tag p">P</span><span class="player-name">Gabe Orbach</span></div>
+  <div class="pos-row"><span class="pos-tag c">C</span><span class="player-name">Paul Salisbury</span></div>
+  <div class="pos-row"><span class="pos-tag">1B</span><span class="player-name">Nicholas Dufault</span></div>
+  <div class="pos-row"><span class="pos-tag">2B</span><span class="player-name">Evan Levine</span></div>
+  <div class="pos-row"><span class="pos-tag">3B</span><span class="player-name">Ryan Stupak</span></div>
+  <div class="pos-row"><span class="pos-tag">SS</span><span class="player-name">Cole Lytle</span></div>
+  <div class="pos-row"><span class="pos-tag">LF</span><span class="player-name">Jack Taylor</span></div>
+  <div class="pos-row"><span class="pos-tag">CF</span><span class="player-name">Wesley Lubnow</span></div>
+  <div class="pos-row"><span class="pos-tag">RF</span><span class="player-name">Nicolas Kopic</span></div>
+  <div class="divider"></div>
+  <div class="sitting-row"><span class="sit-label">Sitting</span><span class="sit-names">Nathan Fisk · Brendan Reynolds</span></div>
+</div>
+
+<div class="card" id="inn4" style="display:none">
+  <div class="card-header">
+    <span class="inning-label">Inning 4</span>
+    <span class="pitcher-badge">Gabe pitching · Cole catches · Paul 3B</span>
+  </div>
+  <div class="pos-row"><span class="pos-tag p">P</span><span class="player-name">Gabe Orbach</span></div>
+  <div class="pos-row"><span class="pos-tag c">C</span><span class="player-name">Cole Lytle</span></div>
+  <div class="pos-row"><span class="pos-tag">1B</span><span class="player-name">Nicholas Dufault</span></div>
+  <div class="pos-row"><span class="pos-tag">2B</span><span class="player-name">Evan Levine</span></div>
+  <div class="pos-row"><span class="pos-tag">3B</span><span class="player-name">Paul Salisbury</span></div>
+  <div class="pos-row"><span class="pos-tag">SS</span><span class="player-name">Nathan Fisk</span></div>
+  <div class="pos-row"><span class="pos-tag">LF</span><span class="player-name">Brendan Reynolds</span></div>
+  <div class="pos-row"><span class="pos-tag">CF</span><span class="player-name">Wesley Lubnow</span></div>
+  <div class="pos-row"><span class="pos-tag">RF</span><span class="player-name">Jack Taylor</span></div>
+  <div class="divider"></div>
+  <div class="sitting-row"><span class="sit-label">Sitting</span><span class="sit-names">Ryan Stupak · Nicolas Kopic</span></div>
+</div>
+
+<div class="card" id="inn5" style="display:none">
+  <div class="card-header">
+    <span class="inning-label">Inning 5</span>
+    <span class="pitcher-badge">Evan pitching · Cole catches · Paul 3B</span>
+  </div>
+  <div class="pos-row"><span class="pos-tag p">P</span><span class="player-name">Evan Levine</span></div>
+  <div class="pos-row"><span class="pos-tag c">C</span><span class="player-name">Cole Lytle</span></div>
+  <div class="pos-row"><span class="pos-tag">1B</span><span class="player-name">Nicholas Dufault</span></div>
+  <div class="pos-row"><span class="pos-tag">2B</span><span class="player-name">Jack Taylor</span></div>
+  <div class="pos-row"><span class="pos-tag">3B</span><span class="player-name">Paul Salisbury</span></div>
+  <div class="pos-row"><span class="pos-tag">SS</span><span class="player-name">Gabe Orbach</span></div>
+  <div class="pos-row"><span class="pos-tag">LF</span><span class="player-name">Nathan Fisk</span></div>
+  <div class="pos-row"><span class="pos-tag">CF</span><span class="player-name">Wesley Lubnow</span></div>
+  <div class="pos-row"><span class="pos-tag">RF</span><span class="player-name">Nicolas Kopic</span></div>
+  <div class="divider"></div>
+  <div class="sitting-row"><span class="sit-label">Sitting</span><span class="sit-names">Brendan Reynolds · Ryan Stupak</span></div>
+</div>
+
+<div class="card" id="inn6" style="display:none">
+  <div class="card-header">
+    <span class="inning-label">Inning 6</span>
+    <span class="pitcher-badge">Evan pitching · Paul catches · Cole SS</span>
+  </div>
+  <div class="pos-row"><span class="pos-tag p">P</span><span class="player-name">Evan Levine</span></div>
+  <div class="pos-row"><span class="pos-tag c">C</span><span class="player-name">Paul Salisbury</span></div>
+  <div class="pos-row"><span class="pos-tag">1B</span><span class="player-name">Nicholas Dufault</span></div>
+  <div class="pos-row"><span class="pos-tag">2B</span><span class="player-name">Ryan Stupak</span></div>
+  <div class="pos-row"><span class="pos-tag">3B</span><span class="player-name">Brendan Reynolds</span></div>
+  <div class="pos-row"><span class="pos-tag">SS</span><span class="player-name">Cole Lytle</span></div>
+  <div class="pos-row"><span class="pos-tag">LF</span><span class="player-name">Jack Taylor</span></div>
+  <div class="pos-row"><span class="pos-tag">CF</span><span class="player-name">Wesley Lubnow</span></div>
+  <div class="pos-row"><span class="pos-tag">RF</span><span class="player-name">Nicolas Kopic</span></div>
+  <div class="divider"></div>
+  <div class="sitting-row"><span class="sit-label">Sitting</span><span class="sit-names">Nathan Fisk · Gabe Orbach</span></div>
+</div>
+
+<div class="card" id="inn7" style="display:none">
+  <div class="card-header">
+    <span class="inning-label">Inning 7</span>
+    <span class="pitcher-badge">Evan pitching · Paul catches · Cole SS · Best defense</span>
+  </div>
+  <div class="pos-row"><span class="pos-tag p">P</span><span class="player-name">Evan Levine</span></div>
+  <div class="pos-row"><span class="pos-tag c">C</span><span class="player-name">Paul Salisbury</span></div>
+  <div class="pos-row"><span class="pos-tag">1B</span><span class="player-name">Nicholas Dufault</span></div>
+  <div class="pos-row"><span class="pos-tag">2B</span><span class="player-name">Gabe Orbach</span></div>
+  <div class="pos-row"><span class="pos-tag">3B</span><span class="player-name">Brendan Reynolds</span></div>
+  <div class="pos-row"><span class="pos-tag">SS</span><span class="player-name">Cole Lytle</span></div>
+  <div class="pos-row"><span class="pos-tag">LF</span><span class="player-name">Jack Taylor</span></div>
+  <div class="pos-row"><span class="pos-tag">CF</span><span class="player-name">Wesley Lubnow</span></div>
+  <div class="pos-row"><span class="pos-tag">RF</span><span class="player-name">Ryan Stupak</span></div>
+  <div class="divider"></div>
+  <div class="sitting-row"><span class="sit-label">Sitting</span><span class="sit-names">Nathan Fisk · Nicolas Kopic</span></div>
+</div>
+
+</div><!-- end inning-section -->
+
+<!-- Summary table -->
+<div class="summary-card" id="summary-section" style="display:none">
+  <div class="summary-title">Innings Summary</div>
+  <table>
+    <thead>
+      <tr>
+        <th class="player-col">Player</th>
+        <th>Inn 1</th><th>Inn 2</th><th>Inn 3</th><th>Inn 4</th>
+        <th>Inn 5</th><th>Inn 6</th><th>Inn 7</th><th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="name-cell">Nathan Fisk</td><td class="pitch-cell">P</td><td class="pitch-cell">P</td><td class="sit-cell">—</td><td>SS</td><td>LF</td><td class="sit-cell">—</td><td class="sit-cell">—</td><td class="total-cell">4</td></tr>
+      <tr><td class="name-cell">Gabe Orbach</td><td>2B</td><td>SS</td><td class="pitch-cell">P</td><td class="pitch-cell">P</td><td>SS</td><td class="sit-cell">—</td><td>2B</td><td class="total-cell">6</td></tr>
+      <tr><td class="name-cell">Evan Levine</td><td>SS</td><td class="sit-cell">—</td><td>2B</td><td>2B</td><td class="pitch-cell">P</td><td class="pitch-cell">P</td><td class="pitch-cell">P</td><td class="total-cell">6</td></tr>
+      <tr><td class="name-cell">Cole Lytle</td><td>C</td><td>C</td><td>SS</td><td>C</td><td>C</td><td>SS</td><td>SS</td><td class="total-cell">7</td></tr>
+      <tr><td class="name-cell">Paul Salisbury</td><td>3B</td><td>3B</td><td>C</td><td>3B</td><td>3B</td><td>C</td><td>C</td><td class="total-cell">7</td></tr>
+      <tr><td class="name-cell">Ryan Stupak</td><td>RF</td><td>2B</td><td>3B</td><td class="sit-cell">—</td><td class="sit-cell">—</td><td>2B</td><td>RF</td><td class="total-cell">5</td></tr>
+      <tr><td class="name-cell">Jack Taylor</td><td>CF</td><td class="sit-cell">—</td><td>LF</td><td>RF</td><td>2B</td><td>LF</td><td>LF</td><td class="total-cell">6</td></tr>
+      <tr><td class="name-cell">Brendan Reynolds</td><td>LF</td><td>RF</td><td class="sit-cell">—</td><td>LF</td><td class="sit-cell">—</td><td>3B</td><td>3B</td><td class="total-cell">5</td></tr>
+      <tr><td class="name-cell">Wesley Lubnow</td><td class="sit-cell">—</td><td>CF</td><td>CF</td><td>CF</td><td>CF</td><td>CF</td><td>CF</td><td class="total-cell">6</td></tr>
+      <tr><td class="name-cell">Nicholas Dufault</td><td>1B</td><td>1B</td><td>1B</td><td>1B</td><td>1B</td><td>1B</td><td>1B</td><td class="total-cell">7</td></tr>
+      <tr><td class="name-cell">Nicolas Kopic</td><td class="sit-cell">—</td><td>LF</td><td>RF</td><td class="sit-cell">—</td><td>RF</td><td>RF</td><td class="sit-cell">—</td><td class="total-cell">4</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<footer>CWELL Dodgers · 2025 Senior Baseball · West Essex League</footer>
+
+<script>
+  const innings = [1,2,3,4,5,6,7];
+  let currentView = 'inning';
+  let currentInning = 1;
+
+  function showInning(n) {
+    currentView = 'inning';
+    currentInning = n;
+    innings.forEach(i => {
+      document.getElementById('inn'+i).style.display = (i===n) ? 'block' : 'none';
+    });
+    document.getElementById('summary-section').style.display = 'none';
+    document.querySelectorAll('.inn-btn').forEach((btn, idx) => {
+      btn.classList.toggle('active', idx === n-1);
+    });
+  }
+
+  function showSummary() {
+    currentView = 'summary';
+    innings.forEach(i => document.getElementById('inn'+i).style.display = 'none');
+    document.getElementById('summary-section').style.display = 'block';
+    document.querySelectorAll('.inn-btn').forEach((btn, idx) => {
+      btn.classList.toggle('active', idx === 7);
+    });
+  }
+</script>
+</body>
+</html>
