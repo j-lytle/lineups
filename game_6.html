@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caldwell Dodgers — Game Card</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --dodger-blue: #005A9C;
+  --dodger-blue-dark: #003F6B;
+  --dodger-blue-light: #1E90FF;
+  --white: #FFFFFF;
+  --cream: #F5F0E8;
+  --dirt: #C4A35A;
+  --dirt-dark: #8B7230;
+  --grass: #2D7A3A;
+  --grass-dark: #1B5E25;
+  --grass-light: #4CAF50;
+  --bench-red: #D32F2F;
+  --bench-red-light: #FFCDD2;
+  --gold: #FFD700;
+  --charcoal: #1A1A2E;
+  --slate: #374151;
+  --light-gray: #E5E7EB;
+  --field-gradient: radial-gradient(ellipse at 50% 85%, #3a8f48 0%, #2D7A3A 40%, #1B5E25 100%);
+  --header-gradient: linear-gradient(135deg, var(--dodger-blue-dark) 0%, var(--dodger-blue) 50%, var(--dodger-blue-light) 100%);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.2);
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--cream);
+  color: var(--charcoal);
+  min-height: 100vh;
+}
+
+/* ─── HEADER ─── */
+.header {
+  background: var(--header-gradient);
+  color: white;
+  padding: 28px 32px 20px;
+  position: relative;
+  overflow: hidden;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--gold);
+}
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.team-logo {
+  width: 64px; height: 64px;
+  background: white;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  color: var(--dodger-blue);
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.header h1 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.header .subtitle {
+  font-size: 14px;
+  opacity: 0.85;
+  font-weight: 300;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+.pitching-plan {
+  margin-left: auto;
+  display: flex; gap: 12px;
+  flex-shrink: 0;
+}
+.pitch-chip {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  color: white;
+  white-space: nowrap;
+}
+
+/* ─── TABS ─── */
+.tabs {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 0;
+  padding: 0 32px;
+  position: relative;
+  top: -1px;
+}
+.tab {
+  padding: 14px 28px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  background: var(--slate);
+  color: rgba(255,255,255,0.7);
+  border-radius: var(--radius) var(--radius) 0 0;
+  transition: all 0.2s;
+  margin-right: 3px;
+}
+.tab:hover { background: var(--dodger-blue); color: white; }
+.tab.active {
+  background: var(--cream);
+  color: var(--dodger-blue);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ─── CONTENT ─── */
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 32px 60px;
+}
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ─── FIELD VIEW ─── */
+.inning-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.inning-nav button {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--dodger-blue);
+  background: white;
+  color: var(--dodger-blue);
+  font-family: 'Oswald', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.inning-nav button:hover,
+.inning-nav button.active {
+  background: var(--dodger-blue);
+  color: white;
+  transform: scale(1.1);
+  box-shadow: var(--shadow-md);
+}
+.inning-label {
+  font-family: 'Oswald', sans-serif;
+  font-size: 14px;
+  color: var(--slate);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.field-container {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  aspect-ratio: 1 / 0.9;
+}
+
+.field-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.player-dot {
+  cursor: default;
+  transition: all 0.3s ease;
+}
+.player-dot:hover .dot-bg {
+  filter: brightness(1.2);
+}
+.dot-bg {
+  fill: var(--dodger-blue);
+  stroke: white;
+  stroke-width: 2;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+.dot-label {
+  fill: white;
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+.dot-name {
+  fill: white;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  text-anchor: middle;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+}
+.dot-name-bg {
+  fill: rgba(0,0,0,0.55);
+  rx: 4;
+}
+
+.bench-section {
+  max-width: 700px;
+  margin: 20px auto 0;
+  background: white;
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  box-shadow: var(--shadow-sm);
+  border-left: 4px solid var(--bench-red);
+}
+.bench-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--bench-red);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.bench-players {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.bench-chip {
+  background: var(--bench-red-light);
+  color: var(--bench-red);
+  padding: 5px 14px;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+.inning-notes {
+  max-width: 700px;
+  margin: 14px auto 0;
+  background: rgba(0,90,156,0.06);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--slate);
+  line-height: 1.5;
+  border: 1px solid rgba(0,90,156,0.12);
+}
+.inning-notes strong {
+  color: var(--dodger-blue);
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ─── GRID VIEW ─── */
+.grid-table-wrap {
+  overflow-x: auto;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  background: white;
+}
+.grid-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.grid-table thead th {
+  background: var(--dodger-blue);
+  color: white;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 12px 14px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.grid-table thead th:first-child {
+  text-align: left;
+  min-width: 160px;
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  background: var(--dodger-blue-dark);
+}
+.grid-table tbody td {
+  padding: 10px 14px;
+  text-align: center;
+  border-bottom: 1px solid var(--light-gray);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  transition: background 0.15s;
+}
+.grid-table tbody td:first-child {
+  text-align: left;
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  position: sticky;
+  left: 0;
+  background: white;
+  z-index: 1;
+  border-right: 2px solid var(--light-gray);
+}
+.grid-table tbody tr:nth-child(even) td { background: #F9FAFB; }
+.grid-table tbody tr:nth-child(even) td:first-child { background: #F9FAFB; }
+.grid-table tbody tr:hover td { background: #EFF6FF; }
+.grid-table tbody tr:hover td:first-child { background: #EFF6FF; }
+
+.cell-bench {
+  background: var(--bench-red-light) !important;
+  color: var(--bench-red);
+  font-weight: 600;
+}
+.cell-pitch {
+  background: #FFF3CD !important;
+  color: #856404;
+  font-weight: 600;
+}
+.cell-catch {
+  background: #D1ECF1 !important;
+  color: #0C5460;
+  font-weight: 600;
+}
+
+.grid-table .stat-col {
+  font-family: 'Oswald', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+}
+.stat-play { color: var(--grass-dark); }
+.stat-bench { color: var(--bench-red); }
+
+/* ─── PLAYER SUMMARY ─── */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.player-card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.player-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.card-header {
+  background: var(--header-gradient);
+  color: white;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-name {
+  font-family: 'Oswald', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.card-pos {
+  font-size: 12px;
+  opacity: 0.85;
+  font-weight: 300;
+}
+.card-badge {
+  background: rgba(255,255,255,0.2);
+  border-radius: 14px;
+  padding: 4px 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+.card-body { padding: 14px 18px; }
+.card-innings {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.inning-pip {
+  flex: 1;
+  text-align: center;
+  padding: 6px 2px;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+}
+.pip-play { background: #E8F5E9; color: var(--grass-dark); }
+.pip-bench { background: var(--bench-red-light); color: var(--bench-red); }
+.pip-pitch { background: #FFF3CD; color: #856404; }
+.pip-catch { background: #D1ECF1; color: #0C5460; }
+
+.card-stats {
+  display: flex;
+  gap: 16px;
+  padding-top: 10px;
+  border-top: 1px solid var(--light-gray);
+  font-size: 13px;
+}
+.card-stat label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #9CA3AF;
+  font-family: 'Oswald', sans-serif;
+  display: block;
+}
+.card-stat span {
+  font-family: 'Oswald', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+}
+.stat-green { color: var(--grass); }
+.stat-red { color: var(--bench-red); }
+.stat-blue { color: var(--dodger-blue); }
+
+/* ─── RULES QUICK-REF ─── */
+.rules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+.rule-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  border-top: 3px solid var(--dodger-blue);
+}
+.rule-card h3 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--dodger-blue);
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.rule-card p, .rule-card li {
+  font-size: 13px;
+  color: var(--slate);
+  line-height: 1.6;
+}
+.rule-card ul {
+  padding-left: 18px;
+  margin-top: 6px;
+}
+
+/* ─── LEGEND ─── */
+.legend {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.legend-item {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--slate);
+}
+.legend-swatch {
+  width: 16px; height: 16px;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .header-inner { flex-wrap: wrap; }
+  .pitching-plan { margin-left: 0; margin-top: 10px; width: 100%; justify-content: flex-start; }
+  .tabs { padding: 0 16px; }
+  .tab { padding: 10px 16px; font-size: 13px; }
+  .content { padding: 16px; }
+  .summary-grid { grid-template-columns: 1fr; }
+  .rules-grid { grid-template-columns: 1fr; }
+  .field-container { aspect-ratio: 1 / 1; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="team-logo">CW</div>
+    <div>
+      <h1>Caldwell Dodgers</h1>
+      <div class="subtitle">Senior Baseball — Game Day Card</div>
+    </div>
+    <div class="pitching-plan">
+      <div class="pitch-chip">🔥 Liam: Inn 1–3</div>
+      <div class="pitch-chip">🔥 Evan: Inn 4–5</div>
+      <div class="pitch-chip">🔥 Nathan: Inn 6–7</div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showPanel('field')">⬦ Field View</button>
+  <button class="tab" onclick="showPanel('grid')">▦ Inning Grid</button>
+  <button class="tab" onclick="showPanel('players')">★ Players</button>
+  <button class="tab" onclick="showPanel('rules')">📋 Quick Rules</button>
+</div>
+
+<div class="content">
+
+  <!-- ═══ FIELD VIEW ═══ -->
+  <div id="panel-field" class="panel active">
+    <div class="inning-nav">
+      <span class="inning-label">Inning</span>
+      <button class="active" onclick="showInning(1)">1</button>
+      <button onclick="showInning(2)">2</button>
+      <button onclick="showInning(3)">3</button>
+      <button onclick="showInning(4)">4</button>
+      <button onclick="showInning(5)">5</button>
+      <button onclick="showInning(6)">6</button>
+      <button onclick="showInning(7)">7</button>
+    </div>
+
+    <div class="field-container">
+      <svg class="field-svg" viewBox="0 0 700 630" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="fieldGrad" cx="50%" cy="90%" r="70%">
+            <stop offset="0%" stop-color="#4CAF50"/>
+            <stop offset="60%" stop-color="#2D7A3A"/>
+            <stop offset="100%" stop-color="#1B5E25"/>
+          </radialGradient>
+          <radialGradient id="dirtGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#D4B46A"/>
+            <stop offset="100%" stop-color="#B89840"/>
+          </radialGradient>
+        </defs>
+
+        <!-- Outfield grass -->
+        <path d="M 0 630 L 0 300 Q 350 -60 700 300 L 700 630 Z" fill="url(#fieldGrad)"/>
+
+        <!-- Foul lines -->
+        <line x1="350" y1="560" x2="50" y2="200" stroke="white" stroke-width="2" opacity="0.5"/>
+        <line x1="350" y1="560" x2="650" y2="200" stroke="white" stroke-width="2" opacity="0.5"/>
+
+        <!-- Infield dirt -->
+        <polygon points="350,380 480,470 350,560 220,470" fill="url(#dirtGrad)" opacity="0.7"/>
+
+        <!-- Base paths -->
+        <polygon points="350,390 470,465 350,545 230,465" fill="none" stroke="white" stroke-width="2.5"/>
+
+        <!-- Bases -->
+        <rect x="343" y="538" width="14" height="14" fill="white" transform="rotate(45 350 545)"/>
+        <rect x="223" y="458" width="12" height="12" fill="white" transform="rotate(45 229 464)"/>
+        <rect x="343" y="383" width="12" height="12" fill="white" transform="rotate(45 349 389)"/>
+        <rect x="463" y="458" width="12" height="12" fill="white" transform="rotate(45 469 464)"/>
+
+        <!-- Mound -->
+        <circle cx="350" cy="475" r="14" fill="#C4A35A" stroke="#8B7230" stroke-width="1.5"/>
+        <rect x="344" y="472" width="12" height="3" fill="white" rx="1"/>
+
+        <!-- Player positions (will be updated by JS) -->
+        <g id="field-players"></g>
+      </svg>
+    </div>
+
+    <div id="bench-section" class="bench-section">
+      <div class="bench-title">🪑 On the Bench</div>
+      <div id="bench-players" class="bench-players"></div>
+    </div>
+    <div id="inning-notes" class="inning-notes"></div>
+  </div>
+
+  <!-- ═══ GRID VIEW ═══ -->
+  <div id="panel-grid" class="panel">
+    <div class="legend">
+      <div class="legend-item"><div class="legend-swatch" style="background:#E8F5E9;border:1px solid #A5D6A7"></div> Field Position</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#FFF3CD;border:1px solid #FFE082"></div> Pitching</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#D1ECF1;border:1px solid #86C5DA"></div> Catching</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#FFCDD2;border:1px solid #EF9A9A"></div> Bench</div>
+    </div>
+    <div class="grid-table-wrap">
+      <table class="grid-table" id="grid-table">
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th>
+            <th>Play</th><th>Bench</th>
+          </tr>
+        </thead>
+        <tbody id="grid-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ PLAYERS ═══ -->
+  <div id="panel-players" class="panel">
+    <div class="summary-grid" id="player-cards"></div>
+  </div>
+
+  <!-- ═══ RULES ═══ -->
+  <div id="panel-rules" class="panel">
+    <div class="rules-grid">
+      <div class="rule-card">
+        <h3>🕐 Game Length</h3>
+        <p>7 innings. No new inning after 1 hr 45 min from game start. You may finish the current inning.</p>
+      </div>
+      <div class="rule-card">
+        <h3>🏃 Run Limit</h3>
+        <p>Max 5 runs per team per inning for innings 1–6. No cap in the 7th. Swing away!</p>
+      </div>
+      <div class="rule-card">
+        <h3>⚾ Pitching Limits</h3>
+        <ul>
+          <li>Max 9 innings/week (Mon–Sun)</li>
+          <li>Max 4 innings/game</li>
+          <li>1 pitch = 1 inning</li>
+          <li>2 days rest if 3+ innings pitched</li>
+          <li>2nd mound visit same inning = pitcher removed</li>
+        </ul>
+      </div>
+      <div class="rule-card">
+        <h3>🔄 Playing Time</h3>
+        <ul>
+          <li>Continuous batting order up to min players present</li>
+          <li>All players: 2 consecutive defensive innings</li>
+          <li>Subs made at start of 3rd inning</li>
+          <li>Players leaving in 3rd may re-enter</li>
+        </ul>
+      </div>
+      <div class="rule-card">
+        <h3>🏠 Run Rules</h3>
+        <ul>
+          <li>12 runs ahead after 5 innings = game over</li>
+          <li>15 runs ahead at curfew = game over regardless</li>
+          <li>Official game: 4½ inn (home ahead) / 5 inn (visitor ahead)</li>
+        </ul>
+      </div>
+      <div class="rule-card">
+        <h3>📋 Key Reminders</h3>
+        <ul>
+          <li>No metal spikes</li>
+          <li>MUST have a catcher — full gear always</li>
+          <li>Dropped 3rd strike: batter out, runners advance</li>
+          <li>Courtesy runner: 2 outs, pitcher/catcher, last batted out</li>
+          <li>Hit 3 batters in 1 inning → pitcher removed</li>
+          <li>Slide/avoid at all bases when play is on</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// GAME DATA
+// ═══════════════════════════════════════
+
+const innings = [
+  { // Inning 1
+    lineup: {
+      P: "Liam Hines", C: "Ethan Diamond", "1B": "Nicky Dufalt",
+      "2B": "Nathan Fisk", "3B": "Paul Salisbury", SS: "Gabriel Orbach",
+      LF: "Nick Kopic", CF: "Wesley Lubnow", RF: "Evan Levine"
+    },
+    bench: ["Jack Taylor", "Luke Stefanczyk", "Hayden Cheng", "Brendan Reynolds"],
+    notes: "Opening lineup. Liam on the bump, Ethan behind the plate. Gabe anchors short. Nick starts in left to get his swings early."
+  },
+  { // Inning 2
+    lineup: {
+      P: "Liam Hines", C: "Hayden Cheng", "1B": "Brendan Reynolds",
+      "2B": "Jack Taylor", "3B": "Gabriel Orbach", SS: "Paul Salisbury",
+      LF: "Evan Levine", CF: "Luke Stefanczyk", RF: "Wesley Lubnow"
+    },
+    bench: ["Ethan Diamond", "Nathan Fisk", "Nicky Dufalt", "Nick Kopic"],
+    notes: "Big rotation — everyone who sat inning 1 plays now. Hayden catches. Gabe to 3B, Paul to SS (both 5-rated). Brendan spells Nicky at 1B."
+  },
+  { // Inning 3
+    lineup: {
+      P: "Liam Hines", C: "Ethan Diamond", "1B": "Nicky Dufalt",
+      "2B": "Nathan Fisk", "3B": "Brendan Reynolds", SS: "Gabriel Orbach",
+      LF: "Nick Kopic", CF: "Jack Taylor", RF: "Hayden Cheng"
+    },
+    bench: ["Paul Salisbury", "Wesley Lubnow", "Evan Levine", "Luke Stefanczyk"],
+    notes: "Evan rests before taking the mound in the 4th. Paul and Wesley sit but both played innings 1 & 2. No back-to-back benching."
+  },
+  { // Inning 4
+    lineup: {
+      P: "Evan Levine", C: "Hayden Cheng", "1B": "Nicky Dufalt",
+      "2B": "Wesley Lubnow", "3B": "Paul Salisbury", SS: "Nathan Fisk",
+      LF: "Luke Stefanczyk", CF: "Liam Hines", RF: "Brendan Reynolds"
+    },
+    bench: ["Gabriel Orbach", "Ethan Diamond", "Jack Taylor", "Nick Kopic"],
+    notes: "Pitching change — Evan takes the hill. Liam done pitching, moves to CF. Gabe gets his well-earned rest after 3 straight. Nathan at SS (4 rating)."
+  },
+  { // Inning 5
+    lineup: {
+      P: "Evan Levine", C: "Ethan Diamond", "1B": "Hayden Cheng",
+      "2B": "Gabriel Orbach", "3B": "Jack Taylor", SS: "Paul Salisbury",
+      LF: "Wesley Lubnow", CF: "Nick Kopic", RF: "Liam Hines"
+    },
+    bench: ["Nicky Dufalt", "Nathan Fisk", "Brendan Reynolds", "Luke Stefanczyk"],
+    notes: "Gabe back at 2B. Hayden spells Nicky at 1B (5 rating). Nathan rests before closing duties. Everyone on bench played inning 4."
+  },
+  { // Inning 6
+    lineup: {
+      P: "Nathan Fisk", C: "Ethan Diamond", "1B": "Nicky Dufalt",
+      "2B": "Wesley Lubnow", "3B": "Gabriel Orbach", SS: "Evan Levine",
+      LF: "Brendan Reynolds", CF: "Luke Stefanczyk", RF: "Jack Taylor"
+    },
+    bench: ["Paul Salisbury", "Hayden Cheng", "Liam Hines", "Nick Kopic"],
+    notes: "Nathan to the mound for the final stretch. Evan done pitching, slides to SS (5 rating). Luke and Brendan back in the grass."
+  },
+  { // Inning 7
+    lineup: {
+      P: "Nathan Fisk", C: "Hayden Cheng", "1B": "Nicky Dufalt",
+      "2B": "Liam Hines", "3B": "Paul Salisbury", SS: "Gabriel Orbach",
+      LF: "Nick Kopic", CF: "Wesley Lubnow", RF: "Ethan Diamond"
+    },
+    bench: ["Evan Levine", "Jack Taylor", "Brendan Reynolds", "Luke Stefanczyk"],
+    notes: "Closing time! Gabe back at SS to lock it down. Paul and Liam back in. Nick gets his last look in left. Hayden catches the finale. Let's bring it home! 🎉"
+  }
+];
+
+// Player skill ratings from roster
+const playerData = {
+  "Nick Kopic":       { pos: "OF", speed: 2, ratings: {P:0,C:0,"1B":0,"2B":0,"3B":0,SS:0,OF:0} },
+  "Luke Stefanczyk":  { pos: "OF", speed: 3, ratings: {P:0,C:0,"1B":2,"2B":3,"3B":2,SS:2,OF:5} },
+  "Jack Taylor":      { pos: "2B/OF", speed: 4, ratings: {P:4,C:3,"1B":3,"2B":3,"3B":2,SS:2,OF:5} },
+  "Brendan Reynolds":  { pos: "OF/3B", speed: 3, ratings: {P:3,C:3,"1B":3,"2B":3,"3B":3,SS:3,OF:4} },
+  "Nicky Dufalt":     { pos: "1B", speed: 1, ratings: {P:3,C:3,"1B":5,"2B":4,"3B":3,SS:0,OF:3} },
+  "Wesley Lubnow":    { pos: "UTL", speed: 5, ratings: {P:2,C:3,"1B":2,"2B":4,"3B":4,SS:4,OF:5} },
+  "Liam Hines":       { pos: "C/UTL", speed: 3, ratings: {P:4,C:5,"1B":4,"2B":4,"3B":4,SS:4,OF:3} },
+  "Nathan Fisk":      { pos: "2B/UTL", speed: 3, ratings: {P:4,C:2,"1B":3,"2B":5,"3B":4,SS:4,OF:5} },
+  "Gabriel Orbach":   { pos: "UTL", speed: 5, ratings: {P:4,C:2,"1B":4,"2B":5,"3B":5,SS:5,OF:5} },
+  "Paul Salisbury":   { pos: "INF/UTL", speed: 4, ratings: {P:4,C:3,"1B":5,"2B":5,"3B":5,SS:5,OF:5} },
+  "Evan Levine":      { pos: "UTL", speed: 3, ratings: {P:4,C:4,"1B":5,"2B":5,"3B":5,SS:5,OF:5} },
+  "Hayden Cheng":     { pos: "UTL/C", speed: 3, ratings: {P:4,C:5,"1B":5,"2B":5,"3B":5,SS:5,OF:5} },
+  "Ethan Diamond":    { pos: "C/UTL", speed: 4, ratings: {P:4,C:5,"1B":5,"2B":5,"3B":5,SS:5,OF:5} }
+};
+
+// Position coordinates on the SVG field
+const posCoords = {
+  P:   { x: 350, y: 460 },
+  C:   { x: 350, y: 590 },
+  "1B":{ x: 478, y: 450 },
+  "2B":{ x: 420, y: 370 },
+  "3B":{ x: 222, y: 450 },
+  SS:  { x: 280, y: 380 },
+  LF:  { x: 130, y: 260 },
+  CF:  { x: 350, y: 200 },
+  RF:  { x: 570, y: 260 }
+};
+
+// ═══════════════════════════════════════
+// RENDER FUNCTIONS
+// ═══════════════════════════════════════
+
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function showInning(n) {
+  document.querySelectorAll('.inning-nav button').forEach((b, i) => {
+    b.classList.toggle('active', i === n - 1);
+  });
+  renderField(n);
+}
+
+function lastName(full) {
+  return full.split(' ').pop();
+}
+
+function renderField(n) {
+  const data = innings[n - 1];
+  const container = document.getElementById('field-players');
+  let svg = '';
+
+  Object.entries(data.lineup).forEach(([pos, player]) => {
+    const {x, y} = posCoords[pos];
+    const lname = lastName(player);
+    const nameWidth = lname.length * 7 + 12;
+
+    svg += `<g class="player-dot">
+      <rect class="dot-name-bg" x="${x - nameWidth/2}" y="${y - 34}" width="${nameWidth}" height="16" rx="4"/>
+      <text class="dot-name" x="${x}" y="${y - 26}">${lname}</text>
+      <circle class="dot-bg" cx="${x}" cy="${y}" r="18"/>
+      <text class="dot-label" x="${x}" y="${y}">${pos}</text>
+    </g>`;
+  });
+
+  container.innerHTML = svg;
+
+  // Bench
+  const benchEl = document.getElementById('bench-players');
+  benchEl.innerHTML = data.bench.map(p => `<span class="bench-chip">${p}</span>`).join('');
+
+  // Notes
+  document.getElementById('inning-notes').innerHTML = `<strong>Coach's Notes:</strong> ${data.notes}`;
+}
+
+function buildGrid() {
+  const players = [
+    "Gabriel Orbach", "Liam Hines", "Ethan Diamond", "Nicky Dufalt",
+    "Evan Levine", "Hayden Cheng", "Nathan Fisk", "Paul Salisbury",
+    "Wesley Lubnow", "Brendan Reynolds", "Jack Taylor", "Nick Kopic",
+    "Luke Stefanczyk"
+  ];
+
+  const tbody = document.getElementById('grid-body');
+  let html = '';
+
+  players.forEach(player => {
+    html += `<tr><td>${player}</td>`;
+    let playCount = 0, benchCount = 0;
+
+    for (let i = 0; i < 7; i++) {
+      const inn = innings[i];
+      if (inn.bench.includes(player)) {
+        html += `<td class="cell-bench">B</td>`;
+        benchCount++;
+      } else {
+        const pos = Object.entries(inn.lineup).find(([k, v]) => v === player);
+        const posLabel = pos ? pos[0] : '?';
+        let cls = '';
+        if (posLabel === 'P') cls = 'cell-pitch';
+        else if (posLabel === 'C') cls = 'cell-catch';
+        html += `<td class="${cls}">${posLabel}</td>`;
+        playCount++;
+      }
+    }
+
+    html += `<td class="stat-col stat-play">${playCount}</td>`;
+    html += `<td class="stat-col stat-red">${benchCount}</td>`;
+    html += `</tr>`;
+  });
+
+  tbody.innerHTML = html;
+}
+
+function buildPlayerCards() {
+  const container = document.getElementById('player-cards');
+  let html = '';
+
+  const allPlayers = Object.keys(playerData);
+
+  // Sort: most innings played first
+  allPlayers.sort((a, b) => {
+    const aPlay = innings.filter(inn => !inn.bench.includes(a)).length;
+    const bPlay = innings.filter(inn => !inn.bench.includes(b)).length;
+    return bPlay - aPlay;
+  });
+
+  allPlayers.forEach(player => {
+    const pd = playerData[player];
+    let playCount = 0, benchCount = 0;
+    const posPlayed = [];
+
+    innings.forEach((inn, i) => {
+      if (inn.bench.includes(player)) {
+        benchCount++;
+        posPlayed.push({ inning: i + 1, pos: 'B', type: 'bench' });
+      } else {
+        playCount++;
+        const entry = Object.entries(inn.lineup).find(([k, v]) => v === player);
+        const pos = entry ? entry[0] : '?';
+        let type = 'play';
+        if (pos === 'P') type = 'pitch';
+        else if (pos === 'C') type = 'catch';
+        posPlayed.push({ inning: i + 1, pos, type });
+      }
+    });
+
+    const uniquePos = [...new Set(posPlayed.filter(p => p.type !== 'bench').map(p => p.pos))];
+
+    html += `<div class="player-card">
+      <div class="card-header">
+        <div>
+          <div class="card-name">${player}</div>
+          <div class="card-pos">${pd.pos} • Speed: ${pd.speed}/5</div>
+        </div>
+        <div class="card-badge">${playCount}/${benchCount}</div>
+      </div>
+      <div class="card-body">
+        <div class="card-innings">
+          ${posPlayed.map(p => `<div class="inning-pip pip-${p.type}" title="Inn ${p.inning}">${p.pos}</div>`).join('')}
+        </div>
+        <div class="card-stats">
+          <div class="card-stat"><label>Innings</label><span class="stat-green">${playCount}</span></div>
+          <div class="card-stat"><label>Bench</label><span class="stat-red">${benchCount}</span></div>
+          <div class="card-stat"><label>Positions</label><span class="stat-blue">${uniquePos.length}</span></div>
+          <div class="card-stat"><label>Spots</label><span>${uniquePos.join(', ')}</span></div>
+        </div>
+      </div>
+    </div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+renderField(1);
+buildGrid();
+buildPlayerCards();
+</script>
+</body>
+</html>
